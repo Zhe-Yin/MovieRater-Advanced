@@ -7,11 +7,13 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.LinearLayout
+//import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
-import com.example.movierater_advanced.Movie
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+
 import com.example.movierater_advanced.databinding.ActivityAddMovieBinding
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -20,6 +22,9 @@ import java.util.*
 class AddMovie : AppCompatActivity() {
     private lateinit var binding: ActivityAddMovieBinding
     private lateinit var sqLiteHelper: SQLiteHelper
+    private lateinit var  recyclerView: RecyclerView
+    private var adapter:MovieAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddMovieBinding.inflate(layoutInflater)
@@ -34,11 +39,12 @@ class AddMovie : AppCompatActivity() {
             //set back button
             actionbar.setDisplayHomeAsUpEnabled(true)
 
-            below13.setOnClickListener{
-                setvisibility()
-            }
+//            below13.setOnClickListener{
+//                setvisibility()
+//            }
 
 //            initalView()
+            initRecyclerView()
             sqLiteHelper = SQLiteHelper(this@AddMovie)
 
 
@@ -50,6 +56,14 @@ class AddMovie : AppCompatActivity() {
         val movielist = sqLiteHelper.getAllMovie()
         Log.e("Listing","${movielist.size}")
 
+        adapter?.addItems(movielist)
+
+    }
+    private fun initRecyclerView(){
+        recyclerView = findViewById(R.id.recylerview)
+        recyclerView.layoutManager = LinearLayoutManager(this@AddMovie)
+        adapter = MovieAdapter()
+        recyclerView.adapter = adapter
     }
     private fun addmovie(){
         binding.apply {
@@ -155,7 +169,7 @@ class AddMovie : AppCompatActivity() {
             below13.isChecked = false
             languageused.isChecked = false
             violence.isChecked = false
-            setvisibility()
+//            setvisibility()
 
         }
     }
@@ -181,15 +195,15 @@ class AddMovie : AppCompatActivity() {
         }
     }
     // Checkbox visibility
-    private  fun setvisibility() {
-        binding.apply {
-            val linear:LinearLayout = findViewById(R.id.layout_reasons)
-            if(below13.isChecked){
-                linear.visibility = View.VISIBLE
-            }else{
-                linear.visibility = View.INVISIBLE
-            }
-        }
-    }
+//    private  fun setvisibility() {
+//        binding.apply {
+//            val linear:LinearLayout = findViewById(R.id.layout_reasons)
+//            if(below13.isChecked){
+//                linear.visibility = View.VISIBLE
+//            }else{
+//                linear.visibility = View.INVISIBLE
+//            }
+//        }
+//    }
 
 }

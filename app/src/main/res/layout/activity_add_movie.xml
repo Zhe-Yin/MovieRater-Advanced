@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddMovie"
+
     android:orientation="vertical">
 
     <TextView
@@ -116,5 +117,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Language used" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/recylerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/movieid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </LinearLayout>

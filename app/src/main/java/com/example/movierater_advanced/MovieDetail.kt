@@ -15,8 +15,7 @@ import com.example.movierater_advanced.databinding.ActivityMovieDetailBinding
 
 class MovieDetail : AppCompatActivity() {
     private lateinit var binding: ActivityMovieDetailBinding
-    private lateinit var  recyclerView: RecyclerView
-    private var adapter:MovieAdapter? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
