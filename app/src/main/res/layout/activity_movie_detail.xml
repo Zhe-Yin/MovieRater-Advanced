@@ -12,11 +12,7 @@
     android:layout_height="60dp"
   android:padding="5dp"
   android:src="@drawable/moviedefault"/>
-  <TextView
-      android:id="@+id/movieid"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      />
+
 
   <TextView
       android:layout_width="match_parent"

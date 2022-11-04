@@ -37,14 +37,14 @@ class SQLiteHelper(context: Context) :
         onCreate(db)
     }
 
-    fun insertMovie(std:Movie_2):Long{
+    fun insertMovie(movie:Movie_2):Long{
         val db = this.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(ID, std.id)
-        contentValues.put(NAME, std.name)
-        contentValues.put(DESCRIPTION, std.description)
-        contentValues.put(LANGUAGE, std.language)
-        contentValues.put(DATE, std.date)
+        contentValues.put(ID, movie.id)
+        contentValues.put(NAME, movie.name)
+        contentValues.put(DESCRIPTION, movie.description)
+        contentValues.put(LANGUAGE, movie.language)
+        contentValues.put(DATE, movie.date)
 
         val success = db.insert(TBL_MOVIE, null,contentValues)
         db.close()
@@ -88,5 +88,30 @@ class SQLiteHelper(context: Context) :
             }while(cursor.moveToNext())
         }
         return movielist
+    }
+
+    fun updateMovie(movie:Movie_2):Int{
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(ID, movie.id)
+        contentValues.put(NAME, movie.name)
+        contentValues.put(DESCRIPTION, movie.description)
+        contentValues.put(LANGUAGE, movie.language)
+        contentValues.put(DATE, movie.date)
+
+        val success = db.update(TBL_MOVIE,contentValues,"id"+movie.id,null)
+        db.close()
+
+        return success
+
+    }
+
+    fun deleteMoviebyId(id:Int):Int{
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(ID,id)
+        val success = db.delete(TBL_MOVIE,"id"+id,null)
+        db.close()
+        return success
     }
 }

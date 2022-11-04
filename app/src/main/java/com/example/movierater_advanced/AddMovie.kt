@@ -1,29 +1,29 @@
 package com.example.movierater_advanced
 
+//import android.widget.LinearLayout
+
+
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-//import android.widget.LinearLayout
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 import com.example.movierater_advanced.databinding.ActivityAddMovieBinding
-import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
+
 
 class AddMovie : AppCompatActivity() {
     private lateinit var binding: ActivityAddMovieBinding
     private lateinit var sqLiteHelper: SQLiteHelper
     private lateinit var  recyclerView: RecyclerView
     private var adapter:MovieAdapter? = null
+    private  var movie:Movie_2? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,18 +39,61 @@ class AddMovie : AppCompatActivity() {
             //set back button
             actionbar.setDisplayHomeAsUpEnabled(true)
 
-//            below13.setOnClickListener{
-//                setvisibility()
-//            }
+            below13.setOnClickListener{
+                setvisibility()
+            }
 
 //            initalView()
             initRecyclerView()
+            update.setOnClickListener {
+                updateMovie()
+            }
             sqLiteHelper = SQLiteHelper(this@AddMovie)
+            adapter?.setOnClickItem{
+                Toast.makeText(applicationContext,it.name,Toast.LENGTH_SHORT).show()
 
+                val list_name =findViewById<TextView>(R.id.list_name)
+                val list_description =findViewById<TextView>(R.id.list_description)
+                val list_language =findViewById<TextView>(R.id.list_language)
+                val list_date =findViewById<TextView>(R.id.list_date)
+
+                list_name.setText(it.name)
+                list_description.setText(it.description)
+                list_language.setText(it.language)
+                list_date.setText(it.date)
+                movie = it
+            }
+
+            adapter?.setOnClickDeleteItem {
+                deleteMovie(it.id)
+            }
 
 
         }
 
+    }
+    private fun updateMovie(){
+        val list_name =findViewById<TextView>(R.id.list_name)
+        val list_description =findViewById<TextView>(R.id.list_description)
+        val list_language =findViewById<TextView>(R.id.list_language)
+        val list_date =findViewById<TextView>(R.id.list_date)
+
+        val movie = Movie_2(id=movie!!.id,
+            name = list_name.text.toString(),
+            description = list_description.text.toString(),
+        language = list_language.text.toString(),
+        date = list_date.text.toString())
+
+        val status = sqLiteHelper.updateMovie(movie)
+        if(status > -1){
+            getMovieInfo()
+        }else{
+            Toast.makeText(applicationContext,"Update failed",Toast.LENGTH_LONG).show()
+        }
+    }
+    private fun deleteMovie(id:Int){
+        sqLiteHelper.deleteMoviebyId(id)
+        getMovieInfo()
     }
     private fun getMovieInfo(){
         val movielist = sqLiteHelper.getAllMovie()
@@ -60,7 +103,9 @@ class AddMovie : AppCompatActivity() {
 
     }
     private fun initRecyclerView(){
-        recyclerView = findViewById(R.id.recylerview)
+
+
+        recyclerView = findViewById(R.id.recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(this@AddMovie)
         adapter = MovieAdapter()
         recyclerView.adapter = adapter
@@ -69,11 +114,13 @@ class AddMovie : AppCompatActivity() {
         binding.apply {
             val language_grp:RadioGroup = findViewById(R.id.group_language)
             val language_button = language_grp.checkedRadioButtonId
-            val language = findViewById(language_button) as RadioButton
+            val language_final:RadioButton = findViewById(language_button)
+            val language = language_final.text.toString()
+
             val movie = Movie_2(
                 name=name.text.toString(),
             description = description.text.toString(),
-            language = language.toString(),
+            language = language,
             date = date.text.toString())
             val status = sqLiteHelper.insertMovie(movie)
             if(status > -1){
@@ -195,15 +242,15 @@ class AddMovie : AppCompatActivity() {
         }
     }
     // Checkbox visibility
-//    private  fun setvisibility() {
-//        binding.apply {
-//            val linear:LinearLayout = findViewById(R.id.layout_reasons)
-//            if(below13.isChecked){
-//                linear.visibility = View.VISIBLE
-//            }else{
-//                linear.visibility = View.INVISIBLE
-//            }
-//        }
-//    }
+    private  fun setvisibility() {
+        binding.apply {
+            val linear:LinearLayout = findViewById(R.id.layout_reasons)
+            if(below13.isChecked){
+                linear.visibility = View.VISIBLE
+            }else{
+                linear.visibility = View.INVISIBLE
+            }
+        }
+    }
 
 }
