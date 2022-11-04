@@ -52,10 +52,21 @@ class AddMovie : AppCompatActivity() {
             adapter?.setOnClickItem{
                 Toast.makeText(applicationContext,it.name,Toast.LENGTH_SHORT).show()
 
+                val movie_ID = findViewById<TextView>(R.id.movieid)
                 val list_name =findViewById<TextView>(R.id.list_name)
                 val list_description =findViewById<TextView>(R.id.list_description)
                 val list_language =findViewById<TextView>(R.id.list_language)
                 val list_date =findViewById<TextView>(R.id.list_date)
+
+                val langauge_grp = findViewById<RadioGroup>(R.id.group_language)
+                val language_button = langauge_grp.checkedRadioButtonId
+                if(language_button.toString() == list_language.text.toString()){
+                    langauge_grp.checkedRadioButtonId
+                }
+                movieid.setText(movie_ID.text)
+                name.setText(list_name.text)
+                description.setText(list_description.text)
+                date.setText(list_date.text)
 
                 list_name.setText(it.name)
                 list_description.setText(it.description)
@@ -73,23 +84,30 @@ class AddMovie : AppCompatActivity() {
 
     }
     private fun updateMovie(){
-        val list_name =findViewById<TextView>(R.id.list_name)
-        val list_description =findViewById<TextView>(R.id.list_description)
-        val list_language =findViewById<TextView>(R.id.list_language)
-        val list_date =findViewById<TextView>(R.id.list_date)
+        binding.apply{
+//            val list_name =findViewById<TextView>(R.id.list_name)
+//            val list_description =findViewById<TextView>(R.id.list_description)
+//            val list_language =findViewById<TextView>(R.id.list_language)
+//            val list_date =findViewById<TextView>(R.id.list_date)
 
-        val movie = Movie_2(id=movie!!.id,
-            name = list_name.text.toString(),
-            description = list_description.text.toString(),
-        language = list_language.text.toString(),
-        date = list_date.text.toString())
+            val langauge_grp = findViewById<RadioGroup>(R.id.group_language)
+            val language_button = langauge_grp.checkedRadioButtonId
 
-        val status = sqLiteHelper.updateMovie(movie)
-        if(status > -1){
-            getMovieInfo()
-        }else{
-            Toast.makeText(applicationContext,"Update failed",Toast.LENGTH_LONG).show()
+            val movie = Movie_2(id=movieid.text.toString().toInt(),
+                name = name.text.toString(),
+                description = description.text.toString(),
+                language = language_button.toString(),
+                date = date.text.toString())
+
+            val status = sqLiteHelper.updateMovie(movie)
+            if(status > -1){
+                clearall()
+                getMovieInfo()
+            }else{
+                Toast.makeText(applicationContext,"Update failed",Toast.LENGTH_LONG).show()
+            }
         }
+
     }
     private fun deleteMovie(id:Int){
         sqLiteHelper.deleteMoviebyId(id)
@@ -126,6 +144,7 @@ class AddMovie : AppCompatActivity() {
             if(status > -1){
                 Toast.makeText(applicationContext,"Movie Added...",Toast.LENGTH_LONG).show()
                 getMovieInfo()
+                clearall()
             }else{
                 Toast.makeText(applicationContext,"Movie not Added...",Toast.LENGTH_LONG).show()
             }
