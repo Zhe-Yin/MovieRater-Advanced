@@ -8,7 +8,10 @@ class Movie_2 (
     var name:String = "",
     var description:String = "",
     var language:String = "",
-    var date:String = ""
+    var date:String = "",
+    var below13:String = "",
+    var vulgar:String = "",
+    var violence:String = "",
 
 ){
     companion object{

@@ -35,12 +35,12 @@ class MovieDetail : AppCompatActivity() {
 
             // Info retrieve from EditMovie / AddMovie after intent
             val intent = intent
-            title.text = intent.getStringExtra("title")
-            overview.text = intent.getStringExtra("overview")
+            title.text = intent.getStringExtra("name")
+            overview.text = intent.getStringExtra("description")
             language.text = intent.getStringExtra("language")
             date.text = intent.getStringExtra("date")
             below13.text = intent.getStringExtra("below13")
-            languageused.text = intent.getStringExtra("languageused")
+            languageused.text = intent.getStringExtra("vulgar")
             violence.text = intent.getStringExtra("violence")
             if(below13.text == "true"){
                 below13.setText("No")
@@ -73,15 +73,15 @@ class MovieDetail : AppCompatActivity() {
         return true
     }
 
-    // Items in Menu select listener
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.edit -> {
-            val intent = Intent(this@MovieDetail, EditMovie::class.java)
-            startActivity(intent)
-            true
-        }
-        else -> super.onOptionsItemSelected(item)
-    }
+//    // Items in Menu select listener
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+//        R.id.edit -> {
+//            val intent = Intent(this@MovieDetail, EditMovie::class.java)
+//            startActivity(intent)
+//            true
+//        }
+//        else -> super.onOptionsItemSelected(item)
+//    }
 
     // Navigate to Main Page
     override fun onSupportNavigateUp(): Boolean {

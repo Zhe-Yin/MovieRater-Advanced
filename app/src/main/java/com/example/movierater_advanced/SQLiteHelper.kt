@@ -13,13 +13,16 @@ class SQLiteHelper(context: Context) :
 
     companion object{
         private const val DATABASE_VERSION = 1
-        private const val DATABASE_NAME = "movie.db"
-        private const val TBL_MOVIE = "tbl_movie"
+        private const val DATABASE_NAME = "movie4.db"
+        private const val TBL_MOVIE = "tbl_movie_4"
         private const val ID = "id"
         private const val NAME = "name"
         private const val DESCRIPTION = "description"
         private const val LANGUAGE = "language"
         private const val DATE = "date"
+        private const val BELOW13 = "below13"
+        private const val VIOLENCE = "violence"
+        private const val VULGAR = "vulgar"
 
     }
 
@@ -27,6 +30,9 @@ class SQLiteHelper(context: Context) :
         val createTBLMovie = ("CREATE TABLE " + TBL_MOVIE + "("
                 + ID +" INTEGER PRIMARY KEY," + NAME + " TEXT," +
                  DESCRIPTION + " TEXT," + LANGUAGE + " TEXT," + DATE
+                + " TEXT," + BELOW13
+                + " TEXT," + VIOLENCE
+                + " TEXT," + VULGAR
                 + " TEXT" + ")"
                 )
         db?.execSQL(createTBLMovie)
@@ -45,6 +51,9 @@ class SQLiteHelper(context: Context) :
         contentValues.put(DESCRIPTION, movie.description)
         contentValues.put(LANGUAGE, movie.language)
         contentValues.put(DATE, movie.date)
+        contentValues.put(BELOW13, movie.below13)
+        contentValues.put(VIOLENCE, movie.violence)
+        contentValues.put(VULGAR, movie.vulgar)
 
         val success = db.insert(TBL_MOVIE, null,contentValues)
         db.close()
@@ -74,6 +83,10 @@ class SQLiteHelper(context: Context) :
         var description:String
         var language:String
         var date:String
+        var below13:String
+        var violence:String
+        var vulgar:String
+
 
         if(cursor.moveToFirst()){
             do{
@@ -82,7 +95,10 @@ class SQLiteHelper(context: Context) :
                 description = cursor.getString(cursor.getColumnIndex("description"))
                 language = cursor.getString(cursor.getColumnIndex("language"))
                 date = cursor.getString(cursor.getColumnIndex("date"))
-                val movie = Movie_2(id= id,name= name,description= description,language= language,date= date)
+                below13 = cursor.getString(cursor.getColumnIndex("below13"))
+                violence = cursor.getString(cursor.getColumnIndex("violence"))
+                vulgar = cursor.getString(cursor.getColumnIndex("vulgar"))
+                val movie = Movie_2(id= id,name= name,description= description,language= language,date= date,below13=below13,violence=violence, vulgar = vulgar)
                 movielist.add(movie)
 
             }while(cursor.moveToNext())
@@ -98,8 +114,12 @@ class SQLiteHelper(context: Context) :
         contentValues.put(DESCRIPTION, movie.description)
         contentValues.put(LANGUAGE, movie.language)
         contentValues.put(DATE, movie.date)
+        contentValues.put(BELOW13, movie.below13)
+        contentValues.put(VIOLENCE, movie.violence)
+        contentValues.put(VULGAR, movie.vulgar)
 
-        val success = db.update(TBL_MOVIE,contentValues,"id"+movie.id,null)
+
+        val success = db.update(TBL_MOVIE,contentValues,"id="+movie.id,null)
         db.close()
 
         return success
@@ -110,7 +130,7 @@ class SQLiteHelper(context: Context) :
         val db = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(ID,id)
-        val success = db.delete(TBL_MOVIE,"id"+id,null)
+        val success = db.delete(TBL_MOVIE,"id="+id,null)
         db.close()
         return success
     }

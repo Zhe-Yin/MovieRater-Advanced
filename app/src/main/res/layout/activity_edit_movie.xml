@@ -6,7 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".EditMovie"
     android:orientation="vertical">
-
+<!--    <TextView-->
+<!--        android:id="@+id/movieid"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:visibility="invisible"/>-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -117,4 +121,9 @@
             android:layout_weight="1"
             android:text="Language used" />
     </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>
