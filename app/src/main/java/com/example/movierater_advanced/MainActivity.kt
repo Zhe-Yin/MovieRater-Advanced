@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,7 +41,8 @@ class MainActivity : AppCompatActivity() {
             sqLiteHelper = SQLiteHelper(this@MainActivity)
 
             getMovieInfo()
-
+//            val movieinfo = findViewById<LinearLayout>(R.id.movieinfo)
+//            movieinfo.visibility = View.GONE
             adapter?.setOnClickUpdateMenuItem {
                 registerForContextMenu(findViewById(R.id.list_name))
 
@@ -84,9 +86,13 @@ class MainActivity : AppCompatActivity() {
     }
     private fun initRecyclerView(){
         recyclerView = findViewById(R.id.recyclerview)
-        recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+        recyclerView.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
         adapter = MovieAdapter()
         recyclerView.adapter = adapter
+
+
+//        recyclerView.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
+
     }
 
 //    private fun deleteMovie(id:Int){

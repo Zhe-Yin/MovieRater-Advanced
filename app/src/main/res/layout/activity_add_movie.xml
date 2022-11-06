@@ -18,20 +18,20 @@
         android:layout_height="wrap_content"
         android:text="Name"
 />
-    
+
     <EditText
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
 />
-    
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Description"
         />
-    
+
     <EditText
         android:id="@+id/description"
         android:layout_width="match_parent"
@@ -115,19 +115,16 @@
             android:layout_weight="1"
             android:text="Violence"
             />
-
         <CheckBox
             android:id="@+id/languageused"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Language used" />
+            android:text="Language Used"
+            />
+
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
 
 
