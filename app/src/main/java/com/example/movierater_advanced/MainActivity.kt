@@ -50,7 +50,8 @@ class MainActivity : AppCompatActivity() {
             adapter?.onClickDetailItem {
                 val intent = Intent(this@MainActivity, MovieDetail::class.java)
 
-                intent.putExtra("id",it.id)
+
+                intent.putExtra("id",it.id.toString())
                 intent.putExtra("name",it.name)
                 intent.putExtra("description",it.description)
                 intent.putExtra("date",it.date)

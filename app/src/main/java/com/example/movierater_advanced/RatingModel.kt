@@ -4,7 +4,7 @@ import kotlin.random.Random
 
 class RatingModel(
 
-    var id:Int = RatingModel.getAutoId(),
+    var id:Int = getAutoId(),
     var stars:Int,
     var review:String = "",
     var movie_id:Int

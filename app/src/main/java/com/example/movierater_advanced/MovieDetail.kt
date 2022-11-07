@@ -2,6 +2,7 @@ package com.example.movierater_advanced
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.ContextMenu
 import android.view.ContextMenu.ContextMenuInfo
 import android.view.Menu
@@ -15,7 +16,10 @@ import com.example.movierater_advanced.databinding.ActivityMovieDetailBinding
 
 class MovieDetail : AppCompatActivity() {
     private lateinit var binding: ActivityMovieDetailBinding
-
+    private lateinit var sqLiteHelper: SQLiteHelper
+    private lateinit var  recyclerView: RecyclerView
+    private var adapter:MovieAdapter? = null
+    private  var movie:Movie_2? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +39,7 @@ class MovieDetail : AppCompatActivity() {
 
             // Info retrieve from EditMovie / AddMovie after intent
             val intent = intent
+
             title.text = intent.getStringExtra("name")
             overview.text = intent.getStringExtra("description")
             language.text = intent.getStringExtra("language")
@@ -66,6 +71,7 @@ class MovieDetail : AppCompatActivity() {
 
     }
 
+
     // Menu
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.moviedetail, menu)
@@ -89,18 +95,21 @@ class MovieDetail : AppCompatActivity() {
     // Context menu item select listener
     override fun onContextItemSelected(item: MenuItem): Boolean {
         if(item.title == "Add Review"){
-            val intent1 = Intent(this@MovieDetail, Rating::class.java)
-            val intent_2 = intent
-            intent1.putExtra("id",intent_2.getStringExtra("id"))
-            intent1.putExtra("name",intent_2.getStringExtra("id"))
-            intent1.putExtra("description",intent_2.getStringExtra("id"))
-            intent1.putExtra("date",it.date)
-            intent1.putExtra("language",it.language)
-            intent1.putExtra("below13",it.below13)
-            intent1.putExtra("violence",it.violence)
-            intent1.putExtra("vulgar",it.vulgar)
+            binding.apply {
+                val intent1 = Intent(this@MovieDetail, Rating::class.java)
+                val intent2 = intent
 
-            startActivity(intent1)
+                intent1.putExtra("id",intent2.getStringExtra("id"))
+                intent1.putExtra("name",intent2.getStringExtra("name"))
+                intent1.putExtra("description",intent2.getStringExtra("description"))
+                intent1.putExtra("date",intent2.getStringExtra("date"))
+                intent1.putExtra("language",intent2.getStringExtra("language"))
+                intent1.putExtra("below13",intent2.getStringExtra("below13"))
+                intent1.putExtra("violence",intent2.getStringExtra("violence"))
+                intent1.putExtra("vulgar",intent2.getStringExtra("vulgar"))
+                startActivity(intent1)
+            }
+
         }
 
         return true

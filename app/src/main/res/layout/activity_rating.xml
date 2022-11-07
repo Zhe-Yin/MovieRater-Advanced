@@ -34,4 +34,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Share your view on the show"/>
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

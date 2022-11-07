@@ -40,7 +40,9 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MovieViewHolder (
+
         LayoutInflater.from(parent.context).inflate(R.layout.movielist_item,parent,false)
+
         )
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
@@ -49,7 +51,7 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         holder.itemView.setOnClickListener{onClickItem?.invoke(movie)}
         holder.delete.setOnClickListener{onClickDeleteItem?.invoke((movie))}
         holder.movie_name.setOnClickListener{onClickUpdateMenuItem?.invoke(movie)}
-        holder.movie_image.setOnClickListener { onClickDetailItem?.invoke(movie) }
+        holder.item.setOnClickListener { onClickDetailItem?.invoke(movie) }
     }
 
     override fun getItemCount(): Int {
@@ -70,6 +72,7 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         var delete = view.findViewById<Button>(R.id.delete)
         var movie_name = view.findViewById<TextView>(R.id.list_name)
         var movie_image = view.findViewById<ImageView>(R.id.image)
+        var item = view.findViewById<LinearLayout>(R.id.movieitem)
 
         fun bindView(movie:Movie_2){
             id.text = movie.id.toString()

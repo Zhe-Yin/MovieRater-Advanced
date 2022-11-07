@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 class RatingAdapter: RecyclerView.Adapter<RatingAdapter.RatingViewHolder>() {
     private var reviewlist: ArrayList<RatingModel> = ArrayList()
     private var onClickItem: ((RatingModel) -> Unit)? = null
-    private var onClickDeleteItem: ((RatingModel) -> Unit)? = null
-    private var onClickUpdateMenuItem: ((RatingModel) -> Unit)? = null
-    private var onClickDetailItem: ((RatingModel) -> Unit)? = null
+//    private var onClickDeleteItem: ((RatingModel) -> Unit)? = null
+//    private var onClickUpdateMenuItem: ((RatingModel) -> Unit)? = null
+//    private var onClickDetailItem: ((RatingModel) -> Unit)? = null
     fun addItems(items: ArrayList<RatingModel>) {
         this.reviewlist = items
         notifyDataSetChanged()
@@ -24,21 +24,21 @@ class RatingAdapter: RecyclerView.Adapter<RatingAdapter.RatingViewHolder>() {
         this.onClickItem = callback
 
     }
-
-    fun setOnClickDeleteItem(callback: (RatingModel) -> Unit) {
-        this.onClickDeleteItem = callback
-
-    }
-
-    fun setOnClickUpdateMenuItem(callback: (RatingModel) -> Unit) {
-        this.onClickUpdateMenuItem = callback
-
-    }
-
-    fun onClickDetailItem(callback: (RatingModel) -> Unit) {
-        this.onClickDetailItem = callback
-
-    }
+//
+//    fun setOnClickDeleteItem(callback: (RatingModel) -> Unit) {
+//        this.onClickDeleteItem = callback
+//
+//    }
+//
+//    fun setOnClickUpdateMenuItem(callback: (RatingModel) -> Unit) {
+//        this.onClickUpdateMenuItem = callback
+//
+//    }
+//
+//    fun onClickDetailItem(callback: (RatingModel) -> Unit) {
+//        this.onClickDetailItem = callback
+//
+//    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = RatingViewHolder(
@@ -49,9 +49,9 @@ class RatingAdapter: RecyclerView.Adapter<RatingAdapter.RatingViewHolder>() {
         val review = reviewlist[position]
         holder.bindView(review)
         holder.itemView.setOnClickListener { onClickItem?.invoke(review) }
-        holder.delete.setOnClickListener { onClickDeleteItem?.invoke((review)) }
-        holder.movie_name.setOnClickListener { onClickUpdateMenuItem?.invoke(review) }
-        holder.movie_image.setOnClickListener { onClickDetailItem?.invoke(review) }
+//        holder.delete.setOnClickListener { onClickDeleteItem?.invoke((review)) }
+//        holder.movie_name.setOnClickListener { onClickUpdateMenuItem?.invoke(review) }
+//        holder.movie_image.setOnClickListener { onClickDetailItem?.invoke(review) }
     }
 
     override fun getItemCount(): Int {
@@ -66,9 +66,9 @@ class RatingAdapter: RecyclerView.Adapter<RatingAdapter.RatingViewHolder>() {
         private var review = view.findViewById<TextView>(R.id.list_review)
         private var movie_id = view.findViewById<TextView>(R.id.movie_id)
 
-        var delete = view.findViewById<Button>(R.id.delete)
-        var movie_name = view.findViewById<TextView>(R.id.list_name)
-        var movie_image = view.findViewById<ImageView>(R.id.image)
+//        var delete = view.findViewById<Button>(R.id.delete)
+//        var movie_name = view.findViewById<TextView>(R.id.list_name)
+//        var movie_image = view.findViewById<ImageView>(R.id.image)
 
         fun bindView(rating: RatingModel) {
             id.text = rating.id.toString()

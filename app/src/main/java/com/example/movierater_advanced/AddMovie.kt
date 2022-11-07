@@ -47,21 +47,21 @@ class AddMovie : AppCompatActivity() {
 
 
 
-            adapter?.setOnClickItem{
-                Toast.makeText(applicationContext,it.name,Toast.LENGTH_SHORT).show()
-
-                val list_language =findViewById<TextView>(R.id.list_language)
-                val langauge_grp = findViewById<RadioGroup>(R.id.group_language)
-                val language_button = langauge_grp.checkedRadioButtonId
-                if(language_button.toString() == list_language.text.toString()){
-                    langauge_grp.checkedRadioButtonId
-                }
-
-                name.setText(it.name)
-                description.setText(it.description)
-                date.setText(it.date)
-                movie = it
-            }
+//            adapter?.setOnClickItem{
+//                Toast.makeText(applicationContext,it.name,Toast.LENGTH_SHORT).show()
+//
+//                val list_language =findViewById<TextView>(R.id.list_language)
+//                val langauge_grp = findViewById<RadioGroup>(R.id.group_language)
+//                val language_button = langauge_grp.checkedRadioButtonId
+//                if(language_button.toString() == list_language.text.toString()){
+//                    langauge_grp.checkedRadioButtonId
+//                }
+//
+//                name.setText(it.name)
+//                description.setText(it.description)
+//                date.setText(it.date)
+//                movie = it
+//            }
 
         }
 
