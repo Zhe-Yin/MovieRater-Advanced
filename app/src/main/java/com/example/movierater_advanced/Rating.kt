@@ -23,8 +23,10 @@ class Rating : AppCompatActivity() {
         }
     }
     override fun onSupportNavigateUp(): Boolean {
-        val intent = Intent(this@Rating,MovieDetail::class.java)
-        startActivity(intent)
+        val intent1 = Intent(this@Rating,MovieDetail::class.java)
+        val intent_2 = intent
+        intent1.putExtra("id",intent_2.getStringExtra("id"))
+        startActivity(intent1)
         return true
     }
 }

@@ -38,13 +38,9 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     }
 
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-//        val v: View = LayoutInflater.from(parent.context).inflate(R.layout.activity_add_movie, parent, false)
-//        // Give the view as it is
-//        return MovieViewHolder(v)
-//    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MovieViewHolder (
-        LayoutInflater.from(parent.context).inflate(R.layout.list_item,parent,false)
+        LayoutInflater.from(parent.context).inflate(R.layout.movielist_item,parent,false)
         )
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
@@ -61,10 +57,6 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     }
 
     class MovieViewHolder(var view: View): ViewHolder(view){
-//        val language_grp= view.findViewById<RadioGroup>(R.id.group_language)
-//        val language_button = language_grp.checkedRadioButtonId
-//        val chk_language = view.findViewById<RadioButton>(language_button)
-//        val language_final = chk_language.text.toString()
 
 
         private var id = view.findViewById<TextView>(R.id.list_movieid)
@@ -76,7 +68,6 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         private var vulgar = view.findViewById<TextView>(R.id.list_vulgar)
         private var violence = view.findViewById<TextView>(R.id.list_violence)
         var delete = view.findViewById<Button>(R.id.delete)
-//        var update = view.findViewById<Button>(R.id.update)
         var movie_name = view.findViewById<TextView>(R.id.list_name)
         var movie_image = view.findViewById<ImageView>(R.id.image)
 

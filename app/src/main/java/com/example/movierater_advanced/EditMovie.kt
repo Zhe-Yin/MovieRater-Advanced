@@ -4,18 +4,14 @@ import android.content.Intent
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.movierater_advanced.Movie
 import com.example.movierater_advanced.databinding.ActivityEditMovieBinding
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class EditMovie : AppCompatActivity() {
@@ -38,48 +34,18 @@ class EditMovie : AppCompatActivity() {
             //set back button
             actionbar.setDisplayHomeAsUpEnabled(true)
 
+            sqLiteHelper = SQLiteHelper(this@EditMovie)
+
+            insertInfo()
 
             // check visibility
             below13.setOnClickListener{
                 setvisibility()
             }
 
-//            initRecyclerView()
-            insertInfo()
-            sqLiteHelper = SQLiteHelper(this@EditMovie)
 
-//            adapter?.setOnClickItem{
-//                Toast.makeText(applicationContext,it.name, Toast.LENGTH_SHORT).show()
-////
-//                val movie_ID = findViewById<TextView>(R.id.list_movieid)
-//                val list_name =findViewById<TextView>(R.id.list_name)
-//                val list_description =findViewById<TextView>(R.id.list_description)
-//                val list_language =findViewById<TextView>(R.id.list_language)
-//                val list_date =findViewById<TextView>(R.id.list_date)
-////
-//                val langauge_grp = findViewById<RadioGroup>(R.id.group_language)
-//                val language_button = langauge_grp.checkedRadioButtonId
-//                if(language_button.toString() == list_language.text.toString()){
-//                    langauge_grp.checkedRadioButtonId
-//                }
-////
-//                movieid.id = movie_ID.text.toString().toInt()
-//                name.setText(list_name.text)
-//                description.setText(list_description.text)
-//                date.setText(list_date.text)
-//
-//                name.setText(it.name)
-//                description.setText(it.description)
-//                date.setText(it.date)
-//                movie = it
-//            }
         }
     }
-//    private fun Intent.getIntExtra(s: String): Int {
-////        val intent = intent
-////        var new_s = s
-//        return s.toInt()
-//    }
 
     private fun updateMovie(){
         binding.apply{
@@ -153,13 +119,7 @@ class EditMovie : AppCompatActivity() {
 
         }
     }
-//    private fun initRecyclerView(){
-//
-//        recyclerView = findViewById(R.id.recyclerview)
-//        recyclerView.layoutManager = LinearLayoutManager(this@EditMovie)
-//        adapter = MovieAdapter()
-//        recyclerView.adapter = adapter
-//    }
+
 
     // Navigate to Movie Detail
     override fun onSupportNavigateUp(): Boolean {
@@ -188,31 +148,7 @@ class EditMovie : AppCompatActivity() {
         else -> super.onOptionsItemSelected(item)
     }
 
-    // Update Movie with info from Movie class
-//    private fun updateinfo(){
-//        binding.apply {
-//            var m = Movie()
-//
-//            name.setText(m.title)
-//            description.setText(m.desc)
-//            date.setText(m.date)
-//            val language_grp = findViewById(R.id.group_language) as RadioGroup
-//            val language_button = language_grp.checkedRadioButtonId
-//            if(m.language == language_button.toString())
-//            {
-//                language_grp.checkedRadioButtonId
-//            }
-//            if (m.below13 == true){
-//                below13.isChecked = true
-//            }
-//            if (m.language_used == true){
-//                languageused.isChecked == true
-//            }
-//            if(m.violence == false){
-//                violence.isChecked == false
-//            }
-//        }
-//    }
+
 
     // Validation
     private fun validation():Boolean{
@@ -255,25 +191,6 @@ class EditMovie : AppCompatActivity() {
         return haschk
     }
 
-    // Save info & replace old info
-//    private fun save(){
-//        binding.apply {
-//            val intent = Intent(this@EditMovie,MovieDetail::class.java)
-//            val language_grp:RadioGroup = findViewById(R.id.group_language)
-//            val language_button = language_grp.checkedRadioButtonId
-//            val language = findViewById(language_button) as RadioButton
-//
-//            intent.putExtra("title",name.text.toString())
-//            intent.putExtra("overview",description.text.toString())
-//            intent.putExtra("language",language.text.toString())
-//            intent.putExtra("date",date.text.toString())
-//            intent.putExtra("below13",below13.isChecked.toString())
-//            intent.putExtra("violence",violence.isChecked.toString())
-//            intent.putExtra("languageused",languageused.isChecked.toString())
-//
-//            startActivity(intent)
-//        }
-//    }
 
     // cancel edit
     private fun cancel(){

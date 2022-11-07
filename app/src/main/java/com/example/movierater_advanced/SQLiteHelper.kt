@@ -26,6 +26,7 @@ class SQLiteHelper(context: Context) :
 
     }
 
+
     override fun onCreate(db: SQLiteDatabase?) {
         val createTBLMovie = ("CREATE TABLE " + TBL_MOVIE + "("
                 + ID +" INTEGER PRIMARY KEY," + NAME + " TEXT," +
@@ -62,9 +63,11 @@ class SQLiteHelper(context: Context) :
 
     }
 
+
     @SuppressLint("Range")
     fun getAllMovie() : ArrayList<Movie_2>{
         val movielist:ArrayList<Movie_2> = ArrayList()
+        println(movielist)
         val selectQuery = "SELECT * FROM $TBL_MOVIE"
         val db = this.readableDatabase
 

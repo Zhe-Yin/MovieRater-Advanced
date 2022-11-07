@@ -72,17 +72,6 @@ class MovieDetail : AppCompatActivity() {
         R.menu.moviedetail
         return true
     }
-
-//    // Items in Menu select listener
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-//        R.id.edit -> {
-//            val intent = Intent(this@MovieDetail, EditMovie::class.java)
-//            startActivity(intent)
-//            true
-//        }
-//        else -> super.onOptionsItemSelected(item)
-//    }
-
     // Navigate to Main Page
     override fun onSupportNavigateUp(): Boolean {
         val intent = Intent(this@MovieDetail, MainActivity::class.java)
@@ -100,8 +89,18 @@ class MovieDetail : AppCompatActivity() {
     // Context menu item select listener
     override fun onContextItemSelected(item: MenuItem): Boolean {
         if(item.title == "Add Review"){
-            val intent = Intent(this@MovieDetail, Rating::class.java)
-            startActivity(intent)
+            val intent1 = Intent(this@MovieDetail, Rating::class.java)
+            val intent_2 = intent
+            intent1.putExtra("id",intent_2.getStringExtra("id"))
+            intent1.putExtra("name",intent_2.getStringExtra("id"))
+            intent1.putExtra("description",intent_2.getStringExtra("id"))
+            intent1.putExtra("date",it.date)
+            intent1.putExtra("language",it.language)
+            intent1.putExtra("below13",it.below13)
+            intent1.putExtra("violence",it.violence)
+            intent1.putExtra("vulgar",it.vulgar)
+
+            startActivity(intent1)
         }
 
         return true

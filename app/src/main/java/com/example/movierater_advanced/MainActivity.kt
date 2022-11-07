@@ -8,14 +8,10 @@ import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movierater_advanced.databinding.ActivityMainBinding
-import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -36,18 +32,21 @@ class MainActivity : AppCompatActivity() {
             //set actionbar title
             actionbar!!.title = "MovieRater"
 
+            // Start Recyclerview
             initRecyclerView()
 
             sqLiteHelper = SQLiteHelper(this@MainActivity)
 
+            // Retrieve all movies from db
             getMovieInfo()
-//            val movieinfo = findViewById<LinearLayout>(R.id.movieinfo)
-//            movieinfo.visibility = View.GONE
+
+            // long press for context menu
             adapter?.setOnClickUpdateMenuItem {
                 registerForContextMenu(findViewById(R.id.list_name))
 
             }
 
+            // Click Image -> Movie Detail
             adapter?.onClickDetailItem {
                 val intent = Intent(this@MainActivity, MovieDetail::class.java)
 
@@ -65,45 +64,35 @@ class MainActivity : AppCompatActivity() {
 
 
 
-//             Long press for Review
-
-
-//            adapter?.setOnClickDeleteItem {
-//                deleteMovie(it.id)
-//            }
         }
 
     }
 
 
-
-    private fun getMovieInfo(){
+    private fun getMovieInfo() {
         val movielist = sqLiteHelper.getAllMovie()
-        Log.e("Listing","${movielist.size}")
+        Log.e("Listing", "${movielist.size}")
 
         adapter?.addItems(movielist)
-
     }
-    private fun initRecyclerView(){
+
+    private fun initRecyclerView() {
         recyclerView = findViewById(R.id.recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
         adapter = MovieAdapter()
         recyclerView.adapter = adapter
 
 
-//        recyclerView.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
-
     }
 
-//    private fun deleteMovie(id:Int){
-//        sqLiteHelper.deleteMoviebyId(id)
-//        getMovieInfo()
-//    }
+    // Menu
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         R.menu.main
         return true
     }
+
+    // Options
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.addmovie2 -> {
             addMovie()
@@ -121,8 +110,6 @@ class MainActivity : AppCompatActivity() {
     // Context menu item select listener
     override fun onContextItemSelected(item: MenuItem): Boolean {
         if(item.title == "Edit"){
-
-
                 val intent = Intent(this@MainActivity, EditMovie::class.java)
 
                 intent.putExtra("id",findViewById<TextView>(R.id.list_movieid).text.toString())
@@ -134,8 +121,6 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("violence",findViewById<TextView>(R.id.list_violence).text.toString())
                 intent.putExtra("vulgar",findViewById<TextView>(R.id.list_vulgar).text.toString())
                 startActivity(intent)
-
-
 
         }
 
