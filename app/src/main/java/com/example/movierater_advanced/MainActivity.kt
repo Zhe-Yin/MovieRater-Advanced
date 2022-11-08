@@ -1,17 +1,22 @@
 package com.example.movierater_advanced
 
+
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.ContextMenu
+import android.view.ContextMenu.ContextMenuInfo
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.View.OnCreateContextMenuListener
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movierater_advanced.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -26,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+
         binding.apply {
             //actionbar
             val actionbar = supportActionBar
@@ -40,17 +47,18 @@ class MainActivity : AppCompatActivity() {
             // Retrieve all movies from db
             getMovieInfo()
 
-            // long press for context menu
             adapter?.setOnClickUpdateMenuItem {
-                registerForContextMenu(findViewById(R.id.list_name))
+
+                println("hi")
 
             }
+            var recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
+
+            registerForContextMenu(recyclerView)
 
             // Click Image -> Movie Detail
             adapter?.onClickDetailItem {
                 val intent = Intent(this@MainActivity, MovieDetail::class.java)
-
-
                 intent.putExtra("id",it.id.toString())
                 intent.putExtra("name",it.name)
                 intent.putExtra("description",it.description)
@@ -59,14 +67,9 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("below13",it.below13)
                 intent.putExtra("violence",it.violence)
                 intent.putExtra("vulgar",it.vulgar)
-
                 startActivity(intent)
             }
-
-
-
         }
-
     }
 
 
@@ -102,10 +105,9 @@ class MainActivity : AppCompatActivity() {
         else -> super.onOptionsItemSelected(item)
     }
     // Context Menu
-    override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
+    override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo:ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
         menu.add(0, v.id, 0, "Edit")
-
     }
 
     // Context menu item select listener
@@ -134,4 +136,46 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+//    class ViewHolder(itemLayoutView: View) : RecyclerView.ViewHolder(itemLayoutView),
+//        View.OnClickListener, OnCreateContextMenuListener {
+//        var name: TextView
+//        override fun onClick(v: View) {
+//            val location = name.text.toString()
+//            val goFlip = Intent(RecyclerAdapter.context, FlipActivity::class.java)
+//            val bundle = Bundle()
+//            bundle.putString("name", location)
+//            bundle.putInt("pos", adapterPosition)
+//            goFlip.putExtras(bundle)
+//            context.startActivity(goFlip)
+//        }
+//
+//        override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenuInfo) {
+//            menu.setHeaderTitle("Select Action")
+//            val edit = menu.add(Menu.NONE, 1, 1, "Edit")
+//
+//            edit.setOnMenuItemClickListener(onChange)
+//
+//        }
+//
+//        private val onChange =
+//            MenuItem.OnMenuItemClickListener { item ->
+//                when (item.itemId) {
+//                    1 -> {
+//                        Toast.makeText(context, "Edit", Toast.LENGTH_LONG).show()
+//                        return@OnMenuItemClickListener true
+//                    }
+//                    2 -> {
+//                        Toast.makeText(context, "Delete", Toast.LENGTH_LONG).show()
+//                        return@OnMenuItemClickListener true
+//                    }
+//                }
+//                false
+//            }
+//
+//        init {
+//            name = itemLayoutView.findViewById<View>(R.id.rvname) as TextView
+//            itemLayoutView.setOnClickListener(this)
+//            itemLayoutView.setOnCreateContextMenuListener(this)
+//        }
+//    }
 }
