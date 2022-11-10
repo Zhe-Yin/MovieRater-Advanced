@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
 
+
 class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     private var movielist: ArrayList<Movie_2> = ArrayList()
     private var onClickItem: ((Movie_2) -> Unit)? = null
@@ -43,7 +44,8 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
         LayoutInflater.from(parent.context).inflate(R.layout.movielist_item,parent,false)
 
-        )
+    )
+
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = movielist[position]
@@ -51,8 +53,14 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         holder.itemView.setOnClickListener{onClickItem?.invoke(movie)}
         holder.delete.setOnClickListener{onClickDeleteItem?.invoke((movie))}
         holder.movie_name.setOnClickListener{onClickUpdateMenuItem?.invoke(movie)}
-        holder.item.setOnClickListener { onClickDetailItem?.invoke(movie) }
+        holder.movie_image.setOnClickListener { onClickDetailItem?.invoke(movie) }
+//        holder.movie_name.setOnClickListener {
+//            optionsMenuClickListener.onOptionsMenuClicked(position)
+//        }
+
     }
+
+
 
     override fun getItemCount(): Int {
         return movielist.size
@@ -72,7 +80,7 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         var delete = view.findViewById<Button>(R.id.delete)
         var movie_name = view.findViewById<TextView>(R.id.list_name)
         var movie_image = view.findViewById<ImageView>(R.id.image)
-        var item = view.findViewById<LinearLayout>(R.id.movieitem)
+//        var item = view.findViewById<LinearLayout>(R.id.movieitem)
 
         fun bindView(movie:Movie_2){
             id.text = movie.id.toString()
