@@ -2,7 +2,7 @@ package com.example.movierater_advanced
 
 
 
-import android.R
+
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -13,11 +13,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.View.OnCreateContextMenuListener
+import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movierater_advanced.databinding.ActivityMainBinding
+import android.widget.ArrayAdapter as ArrayAdapter1
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,23 +49,21 @@ class MainActivity : AppCompatActivity() {
 
             sqLiteHelper = SQLiteHelper(this@MainActivity)
 
-            // Retrieve all movies from db
             getMovieInfo()
 
-            adapter?.setOnClickUpdateMenuItem {
-                recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
-                recyclerview.adapter = adapter
-                registerForContextMenu(recyclerView)
 
 
-            }
 //            val view2 = findViewById<RecyclerView>(R.id.recyclerview)
 //            val adapter: ArrayAdapter<Unit> = ArrayAdapter<Unit>(this@MainActivity, android.R.layout.activity_list_item,movieall)
 //            view2.adapter = adapter
 //            // Register the ListView  for Context menu
 //            // Register the ListView  for Context menu
-//            registerForContextMenu()
 
+            adapter?.setOnClickUpdateMenuItem {
+                val new_view = findViewById<RecyclerView>(R.id.recyclerview)
+                showPopup(new_view)
+                registerForContextMenu(new_view)
+            }
 
             // Click Image -> Movie Detail
             adapter?.onClickDetailItem {
@@ -79,7 +80,34 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    private fun showPopup(view: View) {
+        val popup = PopupMenu(this, view)
+        popup.inflate(R.menu.editmovie)
 
+        popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
+
+            when (item!!.itemId) {
+                R.id.save -> {
+                    val intent = Intent(this@MainActivity, EditMovie::class.java)
+
+                    intent.putExtra("id",findViewById<TextView>(R.id.list_movieid).text.toString())
+                    intent.putExtra("name",findViewById<TextView>(R.id.list_name).text.toString())
+                    intent.putExtra("description",findViewById<TextView>(R.id.list_description).text.toString())
+                    intent.putExtra("date",findViewById<TextView>(R.id.list_date).text.toString())
+                    intent.putExtra("language",findViewById<TextView>(R.id.list_language).text.toString())
+                    intent.putExtra("below13",findViewById<TextView>(R.id.list_below13).text.toString())
+                    intent.putExtra("violence",findViewById<TextView>(R.id.list_violence).text.toString())
+                    intent.putExtra("vulgar",findViewById<TextView>(R.id.list_vulgar).text.toString())
+                    startActivity(intent)
+                }
+
+            }
+
+            true
+        })
+
+        popup.show()
+    }
 
     private fun getMovieInfo() {
         val movielist = sqLiteHelper.getAllMovie()
