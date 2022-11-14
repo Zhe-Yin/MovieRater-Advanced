@@ -86,13 +86,20 @@ class MainActivity : AppCompatActivity() {
         adapter = MovieAdapter(this, R.layout.movielist_item, movies)
         val listView: ListView = findViewById(R.id.recyclerview)
         listView.adapter = adapter
-//        listView.setOnItemClickListener { _, _, position, _ ->
-//            val intent = Intent(this, ViewMovieDetailsActivity::class.java)
-//            val movie = movies[position]
-//            intent.putExtra("movie", movie)
-//            println(movie.id.toString())
-//            startActivity(intent)
-//        }
+        listView.setOnItemClickListener { _, _, position, _ ->
+            val intent = Intent(this, MovieDetail::class.java)
+            val movie = movies[position]
+            intent.putExtra("id", movie.id)
+            intent.putExtra("name",movie.name)
+            intent.putExtra("description",movie.description)
+            intent.putExtra("date",movie.date)
+            intent.putExtra("language",movie.language)
+            intent.putExtra("below13",movie.below13)
+            intent.putExtra("violence",movie.violence)
+            intent.putExtra("vulgar",movie.vulgar)
+            startActivity(intent)
+        }
+
         registerForContextMenu(listView)
     }
 //    private fun initRecyclerView() {
@@ -234,16 +241,25 @@ override fun onCreateContextMenu(
     v: View?,
     menuInfo: ContextMenu.ContextMenuInfo?
 ) {
-    menuInflater.inflate(R.menu.addmovie, menu)
+    menuInflater.inflate(R.menu.moviedetail, menu)
     super.onCreateContextMenu(menu, v, menuInfo)
 }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
         return when (item.title) {
-            "Add" -> {
+            "Edit" -> {
                 val movie = adapter.getItem(info.position)!!
-                println(movie.name)
+                val intent = Intent(this, EditMovie::class.java)
+                intent.putExtra("id", movie.id.toString())
+                intent.putExtra("name",movie.name)
+                intent.putExtra("description",movie.description)
+                intent.putExtra("date",movie.date)
+                intent.putExtra("language",movie.language)
+                intent.putExtra("below13",movie.below13)
+                intent.putExtra("violence",movie.violence)
+                intent.putExtra("vulgar",movie.vulgar)
+                startActivity(intent)
                 return true
             }
             else -> return super.onContextItemSelected(item)
