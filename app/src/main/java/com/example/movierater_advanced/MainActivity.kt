@@ -1,8 +1,5 @@
 package com.example.movierater_advanced
 
-
-
-
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -13,14 +10,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.View.OnCreateContextMenuListener
-import android.widget.PopupMenu
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movierater_advanced.databinding.ActivityMainBinding
-import android.widget.ArrayAdapter as ArrayAdapter1
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var  recyclerView: RecyclerView
     private var adapter:MovieAdapter? = null
     private  var movie:Movie_2? = null
+    private val mCurrentItemPosition = 0
 //    var movieall = arrayOf(getMovieInfo())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,17 +48,13 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
 //            val view2 = findViewById<RecyclerView>(R.id.recyclerview)
 //            val adapter: ArrayAdapter<Unit> = ArrayAdapter<Unit>(this@MainActivity, android.R.layout.activity_list_item,movieall)
 //            view2.adapter = adapter
 //            // Register the ListView  for Context menu
 //            // Register the ListView  for Context menu
 
-            adapter?.setOnClickUpdateMenuItem {
-                val new_view = findViewById<RecyclerView>(R.id.recyclerview)
-                showPopup(new_view)
-                registerForContextMenu(new_view)
-            }
 
             // Click Image -> Movie Detail
             adapter?.onClickDetailItem {
@@ -80,34 +71,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    private fun showPopup(view: View) {
-        val popup = PopupMenu(this, view)
-        popup.inflate(R.menu.editmovie)
 
-        popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
-
-            when (item!!.itemId) {
-                R.id.save -> {
-                    val intent = Intent(this@MainActivity, EditMovie::class.java)
-
-                    intent.putExtra("id",findViewById<TextView>(R.id.list_movieid).text.toString())
-                    intent.putExtra("name",findViewById<TextView>(R.id.list_name).text.toString())
-                    intent.putExtra("description",findViewById<TextView>(R.id.list_description).text.toString())
-                    intent.putExtra("date",findViewById<TextView>(R.id.list_date).text.toString())
-                    intent.putExtra("language",findViewById<TextView>(R.id.list_language).text.toString())
-                    intent.putExtra("below13",findViewById<TextView>(R.id.list_below13).text.toString())
-                    intent.putExtra("violence",findViewById<TextView>(R.id.list_violence).text.toString())
-                    intent.putExtra("vulgar",findViewById<TextView>(R.id.list_vulgar).text.toString())
-                    startActivity(intent)
-                }
-
-            }
-
-            true
-        })
-
-        popup.show()
-    }
 
     private fun getMovieInfo() {
         val movielist = sqLiteHelper.getAllMovie()
@@ -121,6 +85,8 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
         adapter = MovieAdapter()
         recyclerView.adapter = adapter
+//        val name = findViewById<TextView>(R.id.list_name)
+//        registerForContextMenu(name)
 
 
     }
@@ -140,32 +106,35 @@ class MainActivity : AppCompatActivity() {
         }
         else -> super.onOptionsItemSelected(item)
     }
-    // Context Menu
-    override fun onCreateContextMenu(menu: ContextMenu,v:View, menuInfo:ContextMenuInfo?) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-        menu.add(0, v.id, 0, "Edit")
-    }
+//    // Context Menu
+//    override fun onCreateContextMenu(menu: ContextMenu,v:View, menuInfo:ContextMenuInfo?) {
+//        super.onCreateContextMenu(menu, v, menuInfo)
+//        menu.add(0, v.id, 0, "Edit")
+//    }
 
 
-    // Context menu item select listener
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        if(item.title == "Edit"){
-                val intent = Intent(this@MainActivity, EditMovie::class.java)
+//    // Context menu item select listener
+//    override fun onContextItemSelected(item: MenuItem): Boolean {
+//        if(item.title == "Edit"){
+//                val intent = Intent(this@MainActivity, EditMovie::class.java)
+//
+//
+//            intent.putExtra("id",findViewById<TextView>(R.id.list_movieid).text.toString())
+//            intent.putExtra("name",findViewById<TextView>(R.id.list_name).text.toString())
+//            intent.putExtra("description",findViewById<TextView>(R.id.list_description).text.toString())
+//            intent.putExtra("date",findViewById<TextView>(R.id.list_date).text.toString())
+//            intent.putExtra("language",findViewById<TextView>(R.id.list_language).text.toString())
+//            intent.putExtra("below13",findViewById<TextView>(R.id.list_below13).text.toString())
+//            intent.putExtra("violence",findViewById<TextView>(R.id.list_violence).text.toString())
+//            intent.putExtra("vulgar",findViewById<TextView>(R.id.list_vulgar).text.toString())
+//
+//                startActivity(intent)
+//
+//        }
+//
+//        return true
+//    }
 
-                intent.putExtra("id",findViewById<TextView>(R.id.list_movieid).text.toString())
-                intent.putExtra("name",findViewById<TextView>(R.id.list_name).text.toString())
-                intent.putExtra("description",findViewById<TextView>(R.id.list_description).text.toString())
-                intent.putExtra("date",findViewById<TextView>(R.id.list_date).text.toString())
-                intent.putExtra("language",findViewById<TextView>(R.id.list_language).text.toString())
-                intent.putExtra("below13",findViewById<TextView>(R.id.list_below13).text.toString())
-                intent.putExtra("violence",findViewById<TextView>(R.id.list_violence).text.toString())
-                intent.putExtra("vulgar",findViewById<TextView>(R.id.list_vulgar).text.toString())
-                startActivity(intent)
-
-        }
-
-        return true
-    }
 
     private fun addMovie(){
         binding.apply{

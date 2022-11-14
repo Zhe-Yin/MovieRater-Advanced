@@ -1,14 +1,15 @@
 package com.example.movierater_advanced
 
 //import android.R
-import android.view.ContextMenu
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-
 
 
 class MovieAdapter(): RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
@@ -17,6 +18,25 @@ class MovieAdapter(): RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     private var onClickDeleteItem: ((Movie_2) -> Unit)? = null
     private var onClickUpdateMenuItem: ((Movie_2) -> Unit)? = null
     private var onClickDetailItem: ((Movie_2) -> Unit)? = null
+
+//    var mOnLongItemClickListener: onLongItemClickListener? = null
+//
+//    fun setOnLongItemClickListener(onLongItemClickListener: onLongItemClickListener?) {
+//        mOnLongItemClickListener = onLongItemClickListener
+//    }
+//
+//    interface onLongItemClickListener {
+//        fun ItemLongClicked(v: View?, position: Int)
+//    }
+//    private var position = 0
+//
+//    fun getPosition(): Int {
+//        return position
+//    }
+//
+//    fun setPosition(position: Int) {
+//        this.position = position
+//    }
     fun addItems(items:ArrayList<Movie_2>) {
         this.movielist = items
         notifyDataSetChanged()
@@ -56,15 +76,26 @@ class MovieAdapter(): RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         holder.bindView(movie)
         holder.itemView.setOnClickListener{onClickItem?.invoke(movie)}
         holder.delete.setOnClickListener{onClickDeleteItem?.invoke((movie))}
-//        holder.movie_name.setOnLongClickListener{onClickUpdateMenuItem?.invoke(movie)}
+        holder.movie_name.setOnClickListener{onClickUpdateMenuItem?.invoke(movie)}
         holder.movie_image.setOnClickListener { onClickDetailItem?.invoke(movie) }
-holder.movie_name.setOnLongClickListener {
-    onClickUpdateMenuItem?.invoke(movie)
-    true
-}
+//        holder.itemView.setOnLongClickListener { v ->
+//            if (mOnLongItemClickListener != null) {
+//                mOnLongItemClickListener!!.ItemLongClicked(v, position)
+//            }
+//            true
+//        }
+//        holder.movie_name.setOnLongClickListener{
+//            onClickUpdateMenuItem?.invoke(movie)
+//            true}
 
 
     }
+
+//
+//    fun ItemLongClicked(v: View?, position: Int) {
+//        mCurrentItemPosition = position
+//    };
+
 
 
 
@@ -72,6 +103,33 @@ holder.movie_name.setOnLongClickListener {
         return movielist.size
     }
 
+//    open class ViewHolder(v: View) : RecyclerView.ViewHolder(v),
+//        OnCreateContextMenuListener {
+////        var icon: ImageView
+////        var fileName: TextView
+////        var menuButton: ImageButton
+//        override fun onCreateContextMenu(
+//            menu: ContextMenu, v: View,
+//            menuInfo: ContextMenuInfo
+//        ) {
+//            //menuInfo is null
+//            menu.add(
+//                Menu.NONE, R.id.ctx_menu_remove_backup,
+//                Menu.NONE, R.string.remove_backup
+//            )
+//            menu.add(
+//                Menu.NONE, R.id.ctx_menu_restore_backup,
+//                Menu.NONE, R.string.restore_backup
+//            )
+//        }
+//
+//        init {
+//            icon = v.findViewById<View>(R.id.file_icon) as ImageView
+//            fileName = v.findViewById<View>(R.id.file_name) as TextView
+//            menuButton = v.findViewById<View>(R.id.menu_button) as ImageButton
+//            v.setOnCreateContextMenuListener(this)
+//        }
+//    }
 
 
 

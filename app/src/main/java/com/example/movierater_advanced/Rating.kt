@@ -29,32 +29,32 @@ class Rating : AppCompatActivity() {
             // Initalize SqlHelper
             sqLiteHelper = SQLiteHelper(this@Rating)
 
-            btnSubmit.setOnClickListener{
-
-                addreview()
-            }
+//            btnSubmit.setOnClickListener{
+//
+//                addreview()
+//            }
 
 
         }
     }
 
-    private fun addreview(){
-        val intent1 = intent
-        var intent2 = intent1.getStringExtra("id")
-        println(intent2)
-        val review = RatingModel(
-            stars = 1,
-            review = "Good",
-            movie_id = intent2!!.toInt()
-
-           )
-        val status = sqLiteHelper.insertReview(review)
-        if(status > -1){
-            Toast.makeText(applicationContext,"Movie Added...", Toast.LENGTH_LONG).show()
-        }else{
-            Toast.makeText(applicationContext,"Movie not Added...", Toast.LENGTH_LONG).show()
-        }
-    }
+//    private fun addreview(){
+//        val intent1 = intent
+//        var intent2 = intent1.getStringExtra("id")
+//        println(intent2)
+//        val review = RatingModel(
+//            stars = 1,
+//            review = "Good",
+//            movie_id = intent2!!.toInt()
+//
+//           )
+//        val status = sqLiteHelper.insertReview(review)
+//        if(status > -1){
+//            Toast.makeText(applicationContext,"Movie Added...", Toast.LENGTH_LONG).show()
+//        }else{
+//            Toast.makeText(applicationContext,"Movie not Added...", Toast.LENGTH_LONG).show()
+//        }
+//    }
 
     override fun onSupportNavigateUp(): Boolean {
         val intent1 = Intent(this@Rating,MovieDetail::class.java)

@@ -16,7 +16,7 @@ class SQLiteHelper(context: Context) :
         private const val DATABASE_VERSION = 1
         private const val DATABASE_NAME = "movie4.db"
         private const val TBL_MOVIE = "tbl_movie_4"
-        private const val TBL_REVIEW = "tbl_review"
+//        private const val TBL_REVIEW = "tbl_review"
         private const val ID = "id"
         private const val NAME = "name"
         private const val DESCRIPTION = "description"
@@ -25,9 +25,9 @@ class SQLiteHelper(context: Context) :
         private const val BELOW13 = "below13"
         private const val VIOLENCE = "violence"
         private const val VULGAR = "vulgar"
-        private const val STARS = "stars"
-        private const val REVIEW = "review"
-        private const val MOVIE_ID = "movie_id"
+//        private const val STARS = "stars"
+//        private const val REVIEW = "review"
+//        private const val MOVIE_ID = "movie_id"
 
     }
 
@@ -41,15 +41,15 @@ class SQLiteHelper(context: Context) :
                 + " TEXT," + VULGAR
                 + " TEXT" + ")"
                 )
-        val createTBLReview = ("CREATE TABLE " + TBL_REVIEW + "("
-                + ID +" INTEGER PRIMARY KEY," + STARS +" INTEGER," + REVIEW + " TEXT," + MOVIE_ID + " INTEGER," + ")"
-                )
-        db?.execSQL(createTBLReview+createTBLMovie)
+//        val createTBLReview = ("CREATE TABLE " + TBL_REVIEW + "("
+//                + ID +" INTEGER PRIMARY KEY," + STARS +" INTEGER," + REVIEW + " TEXT," + MOVIE_ID + " INTEGER," + ")"
+//                )
+        db?.execSQL(createTBLMovie)
 
     }
 
     override fun onUpgrade(db: SQLiteDatabase?,oldVersion: Int, newVersion: Int) {
-        db!!.execSQL("DROP TABLE IF EXISTS " + TBL_MOVIE + TBL_REVIEW)
+        db!!.execSQL("DROP TABLE IF EXISTS " + TBL_MOVIE)
 
         onCreate(db)
     }
@@ -73,20 +73,20 @@ class SQLiteHelper(context: Context) :
 
     }
 
-    fun insertReview(review:RatingModel):Long{
-        val db = this.writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put(ID, review.id)
-        contentValues.put(STARS,review.stars)
-        contentValues.put(REVIEW,review.review)
-        contentValues.put(MOVIE_ID,review.movie_id)
-
-        val success = db.insert(TBL_REVIEW, null,contentValues)
-        db.close()
-
-        return success
-
-    }
+//    fun insertReview(review:RatingModel):Long{
+//        val db = this.writableDatabase
+//        val contentValues = ContentValues()
+//        contentValues.put(ID, review.id)
+//        contentValues.put(STARS,review.stars)
+//        contentValues.put(REVIEW,review.review)
+//        contentValues.put(MOVIE_ID,review.movie_id)
+//
+//        val success = db.insert(TBL_REVIEW, null,contentValues)
+//        db.close()
+//
+//        return success
+//
+//    }
 
     @SuppressLint("Range")
     fun getAllMovie() : ArrayList<Movie_2>{
