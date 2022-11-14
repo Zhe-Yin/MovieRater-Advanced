@@ -10,8 +10,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.View.OnCreateContextMenuListener
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movierater_advanced.databinding.ActivityMainBinding
@@ -21,9 +22,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var sqLiteHelper: SQLiteHelper
     private lateinit var  recyclerView: RecyclerView
-    private var adapter:MovieAdapter? = null
-    private  var movie:Movie_2? = null
-    private val mCurrentItemPosition = 0
+    private lateinit var adapter:ArrayAdapter<Movie_2>
+
 //    var movieall = arrayOf(getMovieInfo())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,13 +39,16 @@ class MainActivity : AppCompatActivity() {
             //set actionbar title
             actionbar!!.title = "MovieRater"
 
-            // Start Recyclerview
-            initRecyclerView()
+//            // Start Recyclerview
+//            initRecyclerView()
 
             sqLiteHelper = SQLiteHelper(this@MainActivity)
 
-            getMovieInfo()
-
+//            getMovieInfo()
+            loadMovies(sqLiteHelper.getAllMovie())
+//            adapter?.setOnClickUpdateMenuItem {
+//
+//            }
 
 
 
@@ -57,39 +60,78 @@ class MainActivity : AppCompatActivity() {
 
 
             // Click Image -> Movie Detail
-            adapter?.onClickDetailItem {
-                val intent = Intent(this@MainActivity, MovieDetail::class.java)
-                intent.putExtra("id",it.id.toString())
-                intent.putExtra("name",it.name)
-                intent.putExtra("description",it.description)
-                intent.putExtra("date",it.date)
-                intent.putExtra("language",it.language)
-                intent.putExtra("below13",it.below13)
-                intent.putExtra("violence",it.violence)
-                intent.putExtra("vulgar",it.vulgar)
-                startActivity(intent)
-            }
+//            adapter?.onClickDetailItem {
+//                val intent = Intent(this@MainActivity, MovieDetail::class.java)
+//                intent.putExtra("id",it.id.toString())
+//                intent.putExtra("name",it.name)
+//                intent.putExtra("description",it.description)
+//                intent.putExtra("date",it.date)
+//                intent.putExtra("language",it.language)
+//                intent.putExtra("below13",it.below13)
+//                intent.putExtra("violence",it.violence)
+//                intent.putExtra("vulgar",it.vulgar)
+//                startActivity(intent)
+//            }
         }
     }
 
 
-    private fun getMovieInfo() {
-        val movielist = sqLiteHelper.getAllMovie()
-        Log.e("Listing", "${movielist.size}")
-
-        adapter?.addItems(movielist)
+//    private fun getMovieInfo() {
+//        val movielist = sqLiteHelper.getAllMovie()
+//        Log.e("Listing", "${movielist.size}")
+//
+//        adapter?.addItems(movielist)
+//    }
+    private fun loadMovies(movies: ArrayList<Movie_2>) {
+        adapter = MovieAdapter(this, R.layout.movielist_item, movies)
+        val listView: ListView = findViewById(R.id.recyclerview)
+        listView.adapter = adapter
+//        listView.setOnItemClickListener { _, _, position, _ ->
+//            val intent = Intent(this, ViewMovieDetailsActivity::class.java)
+//            val movie = movies[position]
+//            intent.putExtra("movie", movie)
+//            println(movie.id.toString())
+//            startActivity(intent)
+//        }
+        registerForContextMenu(listView)
     }
+//    private fun initRecyclerView() {
+//
+//        binding.recyclerview.adapter = adapter
+//
+//        recyclerView = findViewById(R.id.recyclerview)
+//        recyclerView.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
+//        adapter = MovieAdapter()
+//        recyclerView.adapter = adapter
+//
+//        registerForContextMenu(recyclerView)
+//
+//    }
 
-    private fun initRecyclerView() {
-        recyclerView = findViewById(R.id.recyclerview)
-        recyclerView.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
-        adapter = MovieAdapter()
-        recyclerView.adapter = adapter
-//        val name = findViewById<TextView>(R.id.list_name)
-//        registerForContextMenu(name)
-
-
-    }
+//    private fun performOptionsMenuClick(position: Int) {
+//        // create object of PopupMenu and pass context and view where we want
+//        // to show the popup menu
+//        val popupMenu = PopupMenu(this , binding.recyclerview[position].findViewById(R.id.list_name))
+//        // add the menu
+//        popupMenu.inflate(R.menu.addmovie)
+//        // implement on menu item click Listener
+//        popupMenu.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener{
+//            override fun onMenuItemClick(item: MenuItem?): Boolean {
+//                when(item?.itemId){
+//
+//                    // in the same way you can implement others
+//                    R.id.addmovie -> {
+//                        // define
+//                        Toast.makeText(this@MainActivity , "Item 2 clicked" , Toast.LENGTH_SHORT).show()
+//                        return true
+//                    }
+//
+//                }
+//                return false
+//            }
+//        })
+//        popupMenu.show()
+//    }
 
     // Menu
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -143,50 +185,71 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    class ViewHolder(itemLayoutView: View) : RecyclerView.ViewHolder(itemLayoutView),
-        View.OnClickListener, OnCreateContextMenuListener {
-        var name: TextView
-        override fun onClick(v: View) {
-            val location = name.text.toString()
+//    class ViewHolder(itemLayoutView: View) : RecyclerView.ViewHolder(itemLayoutView),
+//        View.OnClickListener, OnCreateContextMenuListener {
+//        var name: TextView
+//        override fun onClick(v: View) {
+//            val location = name.text.toString()
+//
+//            val goFlip = Intent(this@ViewHolder as Context?, RecyclerView::class.java)
+//            val bundle = Bundle()
+//            bundle.putString("name", location)
+//            bundle.putInt("pos", adapterPosition)
+//            goFlip.putExtras(bundle)
+//            startActivity(goFlip)
+//        }
+//
+//
+//
+//
+//        //
+//        override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenuInfo) {
+//            menu.setHeaderTitle("Select Action")
+//            val edit = menu.add(Menu.NONE, 1, 1, "Edit")
+//
+//            edit.setOnMenuItemClickListener(onChange)
+//
+//        }
+//
+//        private val onChange =
+//            MenuItem.OnMenuItemClickListener { item ->
+//                when (item.itemId) {
+//                    1 -> {
+//                        println("HELLO")
+//                        return@OnMenuItemClickListener true
+//                    }
+//
+//                }
+//                false
+//            }
+//
+//        init {
+//            name = itemLayoutView.findViewById<View>(R.id.list_name) as TextView
+//            itemLayoutView.setOnClickListener(this@ViewHolder)
+//            itemLayoutView.setOnCreateContextMenuListener(this@ViewHolder)
+//        }
+//    }
+override fun onCreateContextMenu(
+    menu: ContextMenu?,
+    v: View?,
+    menuInfo: ContextMenu.ContextMenuInfo?
+) {
+    menuInflater.inflate(R.menu.addmovie, menu)
+    super.onCreateContextMenu(menu, v, menuInfo)
+}
 
-            val goFlip = Intent(this@ViewHolder as Context?, RecyclerView::class.java)
-            val bundle = Bundle()
-            bundle.putString("name", location)
-            bundle.putInt("pos", adapterPosition)
-            goFlip.putExtras(bundle)
-            startActivity(goFlip)
-        }
-
-
-
-
-        //
-        override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenuInfo) {
-            menu.setHeaderTitle("Select Action")
-            val edit = menu.add(Menu.NONE, 1, 1, "Edit")
-
-            edit.setOnMenuItemClickListener(onChange)
-
-        }
-
-        private val onChange =
-            MenuItem.OnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    1 -> {
-
-                        return@OnMenuItemClickListener true
-                    }
-
-                }
-                false
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
+        return when (item.title) {
+            "Add" -> {
+                val movie = adapter.getItem(info.position)!!
+                println(movie.name)
+                return true
             }
-
-        init {
-            name = itemLayoutView.findViewById<View>(R.id.list_name) as TextView
-            itemLayoutView.setOnClickListener(this@ViewHolder)
-            itemLayoutView.setOnCreateContextMenuListener(this@ViewHolder)
+            else -> return super.onContextItemSelected(item)
         }
     }
+
 
 
 }
