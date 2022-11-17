@@ -11,26 +11,28 @@
         android:layout_height="wrap_content"
         >
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Enter your review for the movie: "/>
         <TextView
-            android:id="@+id/nameET"
+            android:id="@+id/rating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/name"
+            android:layout_toRightOf="@id/rate"
             android:text=""
             />
     </RelativeLayout>
 
     <RatingBar
+        android:id="@+id/stars"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numStars="5"
         />
 
     <EditText
+        android:id="@+id/message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Share your view on the show"/>
@@ -38,5 +40,6 @@
     <Button
         android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="Submit"/>
 </LinearLayout>

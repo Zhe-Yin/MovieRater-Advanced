@@ -81,6 +81,9 @@ class EditMovie : AppCompatActivity() {
                 vulgar = chk_vulgar,
                 violence = chk_violence)
 
+
+
+
             val status = sqLiteHelper.updateMovie(movie)
             if(status > -1){
                 val intent = Intent(this@EditMovie, MainActivity::class.java)
@@ -123,7 +126,8 @@ class EditMovie : AppCompatActivity() {
 
     // Navigate to Movie Detail
     override fun onSupportNavigateUp(): Boolean {
-        val intent = Intent(this@EditMovie,MovieDetail::class.java)
+        val intent = Intent(this@EditMovie,MainActivity::class.java)
+
         startActivity(intent)
         return true
     }

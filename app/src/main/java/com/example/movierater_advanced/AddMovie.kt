@@ -99,6 +99,7 @@ class AddMovie : AppCompatActivity() {
             below13 = chk_below13,
             violence = chk_violence,
             vulgar = chk_vulgar)
+
             val status = sqLiteHelper.insertMovie(movie)
             if(status > -1){
                 Toast.makeText(applicationContext,"Movie Added...",Toast.LENGTH_LONG).show()
