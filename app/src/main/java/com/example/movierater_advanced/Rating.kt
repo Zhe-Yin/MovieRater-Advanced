@@ -36,6 +36,7 @@ class Rating : AppCompatActivity() {
 
             val intent = intent
             if(intent.getStringExtra("message") != "N/A"){
+                println(intent.getStringExtra("name"))
                 btnSubmit.text = "Save"
             }
 
@@ -49,37 +50,33 @@ class Rating : AppCompatActivity() {
     }
 
     private fun addreview(){
-        val intent = intent
+        val rating = findViewById<RatingBar>(R.id.stars)
+        val rate = rating.getRating().toString()
+        val message = findViewById<EditText>(R.id.message)
 
-        val movie = Movie_2(
-            id = intent.getStringExtra("id")!!.toInt(),
-//            name = intent.getStringExtra("name").toString(),
-//            description = intent.getStringExtra("description").toString(),
-//            date = intent.getStringExtra("date").toString(),
-//            language = intent.getStringExtra("language").toString(),
-//            below13 = intent.getStringExtra("below13").toString(),
-//            violence = intent.getStringExtra("violence").toString(),
-//            vulgar = intent.getStringExtra("vulgar").toString()
+        val review = RatingModel(
+            movieid = intent.getStringExtra("id")!!.toInt(),
+            rating = rate.toFloat(),
+            message = message.toString()
         )
-            val rating = findViewById<RatingBar>(R.id.stars)
-            val rate = rating.getRating().toString()
-            val message = findViewById<EditText>(R.id.message)
 
-        val status = sqLiteHelper.addReview(movie,rate.toFloat(),message.toString())
+
+        val status = sqLiteHelper.addReview(review)
         if(status > -1){
             val intent1 = Intent(this@Rating,MovieDetail::class.java)
 
-            val intent2 = intent
-            intent1.putExtra("id",intent2.getStringExtra("id").toString())
-            intent1.putExtra("name",intent2.getStringExtra("name").toString())
-            intent1.putExtra("description",intent2.getStringExtra("description").toString())
-            intent1.putExtra("date",intent2.getStringExtra("date").toString())
-            intent1.putExtra("language",intent2.getStringExtra("language").toString())
-            intent1.putExtra("below13",intent2.getStringExtra("below13").toString())
-            intent1.putExtra("violence",intent2.getStringExtra("violence").toString())
-            intent1.putExtra("vulgar",intent2.getStringExtra("vulgar").toString())
+            val intent = intent
+            println(intent.getStringExtra("name"))
+            intent1.putExtra("id",intent.getStringExtra("id"))
+            intent1.putExtra("name","Hello world")
+            intent1.putExtra("description","Hello world")
+            intent1.putExtra("date",intent.getStringExtra("date"))
+            intent1.putExtra("language",intent.getStringExtra("language"))
+            intent1.putExtra("below13",intent.getStringExtra("below13"))
+            intent1.putExtra("violence",intent.getStringExtra("violence"))
+            intent1.putExtra("vulgar",intent.getStringExtra("vulgar"))
             intent1.putExtra("rating",rate)
-            intent1.putExtra("message",message.toString())
+            intent1.putExtra("message",message.text.toString())
             startActivity(intent1)
             Toast.makeText(applicationContext,"Review success" + message.toString(),Toast.LENGTH_LONG).show()
         }else{
@@ -88,19 +85,26 @@ class Rating : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val intent1 = Intent(this@Rating,MovieDetail::class.java)
+        binding.apply {
+            val intent1 = Intent(this@Rating,MovieDetail::class.java)
 
-        val intent2 = intent
-        intent1.putExtra("id",intent2.getStringExtra("id"))
-        intent1.putExtra("name",intent2.getStringExtra("name"))
-        intent1.putExtra("description",intent2.getStringExtra("description"))
-        intent1.putExtra("date",intent2.getStringExtra("date"))
-        intent1.putExtra("language",intent2.getStringExtra("language"))
-        intent1.putExtra("below13",intent2.getStringExtra("below13"))
-        intent1.putExtra("violence",intent2.getStringExtra("violence"))
-        intent1.putExtra("vulgar",intent2.getStringExtra("vulgar"))
-        startActivity(intent1)
-        return true
+            val intent2 = intent
+            intent1.putExtra("id",intent2.getStringExtra("id"))
+            intent1.putExtra("name",intent2.getStringExtra("name"))
+            intent1.putExtra("description",intent2.getStringExtra("description"))
+            intent1.putExtra("date",intent2.getStringExtra("date"))
+            intent1.putExtra("language",intent2.getStringExtra("language"))
+            intent1.putExtra("below13",intent2.getStringExtra("below13"))
+            intent1.putExtra("violence",intent2.getStringExtra("violence"))
+            intent1.putExtra("vulgar",intent2.getStringExtra("vulgar"))
+            if(btnSubmit.text.toString() == "Save"){
+                intent1.putExtra("rating",intent2.getStringExtra("rating"))
+                intent1.putExtra("message",intent2.getStringExtra("message"))
+            }
+                startActivity(intent1)
+            return true
+        }
+
     }
 }
 

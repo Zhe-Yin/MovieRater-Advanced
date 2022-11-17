@@ -9,7 +9,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movierater_advanced.databinding.ActivityMovieDetailBinding
 
@@ -36,7 +38,7 @@ class MovieDetail : AppCompatActivity() {
             actionbar.setDisplayHomeAsUpEnabled(true)
 
             // Long press for Review
-            registerForContextMenu(reviews);
+            registerForContextMenu(message);
 
             // Info retrieve from EditMovie / AddMovie after intent
             val intent = intent
@@ -49,7 +51,7 @@ class MovieDetail : AppCompatActivity() {
             languageused.text = intent.getStringExtra("vulgar")
             violence.text = intent.getStringExtra("violence")
 //            rating.text = intent.getStringExtra("rating")
-            message.text = intent.getStringExtra("message")
+//            message.text = intent.getStringExtra("message")
             if(below13.text == "true"){
                 below13.setText("No")
                 if (languageused.text == "true"){
@@ -69,8 +71,12 @@ class MovieDetail : AppCompatActivity() {
                 below13.setText("Yes")
             }
             if(intent.getStringExtra("message") != "N/A"){
+                val star_layout = findViewById<LinearLayout>(R.id.rating_star)
+                star_layout.visibility = View.VISIBLE
 
-                reviews.text = intent.getStringExtra("rating") + "Stars"+ "\n" + intent.getStringExtra("message")
+                rating.text = intent.getStringExtra("rating")
+                message.text = intent.getStringExtra("message")
+                stars.rating = intent.getStringExtra("rating")!!.toFloat()
             }
 
         }
@@ -111,20 +117,24 @@ class MovieDetail : AppCompatActivity() {
     // Context menu item select listener
     override fun onContextItemSelected(item: MenuItem): Boolean {
 //        val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
+        val intent = intent
         if(item.title == "Add Review"){
 
             binding.apply {
                 val intent1 = Intent(this@MovieDetail, Rating::class.java)
 //                val movie = adapter!!.getItem(info.position)!!
-                val intent = intent
+
+
                 intent1.putExtra("id",intent.getStringExtra("id"))
-                intent1.putExtra("name",title.toString())
-                intent1.putExtra("description",overview.toString())
-                intent1.putExtra("date",date.toString())
-                intent1.putExtra("language",language.toString())
-                intent1.putExtra("below13",below13.toString())
-                intent1.putExtra("violence",violence.toString())
-                intent1.putExtra("vulgar",languageused.toString())
+                intent1.putExtra("name",title.text.toString())
+                intent1.putExtra("description",overview.text.toString())
+                intent1.putExtra("date",date.text.toString())
+                intent1.putExtra("language",language.text.toString())
+                intent1.putExtra("below13",below13.text.toString())
+                intent1.putExtra("violence",violence.text.toString())
+                intent1.putExtra("vulgar",languageused.text.toString())
+                intent1.putExtra("rating",intent.getStringExtra("rating"))
+                intent1.putExtra("message",intent.getStringExtra("message"))
                 startActivity(intent1)
             }
 
@@ -133,16 +143,17 @@ class MovieDetail : AppCompatActivity() {
             binding.apply {
                 val intent1 = Intent(this@MovieDetail, Rating::class.java)
 //                val movie = adapter!!.getItem(info.position)!!
-                val intent = intent
+
+
 
                 intent1.putExtra("id",intent.getStringExtra("id"))
-                intent1.putExtra("name",title.toString())
-                intent1.putExtra("description",overview.toString())
-                intent1.putExtra("date",date.toString())
-                intent1.putExtra("language",language.toString())
-                intent1.putExtra("below13",below13.toString())
-                intent1.putExtra("violence",violence.toString())
-                intent1.putExtra("vulgar",languageused.toString())
+                intent1.putExtra("name",title.text.toString())
+                intent1.putExtra("description",overview.text.toString())
+                intent1.putExtra("date",date.text.toString())
+                intent1.putExtra("language",language.text.toString())
+                intent1.putExtra("below13",below13.text.toString())
+                intent1.putExtra("violence",violence.text.toString())
+                intent1.putExtra("vulgar",languageused.text.toString())
                 intent1.putExtra("rating",intent.getStringExtra("rating"))
                 intent1.putExtra("message",intent.getStringExtra("message"))
                 startActivity(intent1)

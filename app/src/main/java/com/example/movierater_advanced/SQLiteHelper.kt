@@ -71,17 +71,17 @@ class SQLiteHelper(context: Context) :
         contentValues.put(RATING,1)
         contentValues.put(MESSAGE,"N/A")
 
-        db!!.execSQL("DROP TABLE " + TBL_MOVIE)
-        val createTBLMovie = ("CREATE TABLE " + TBL_MOVIE + "("
-                + ID +" INTEGER PRIMARY KEY," + NAME + " TEXT," +
-                DESCRIPTION + " TEXT," + LANGUAGE + " TEXT," + DATE
-                + " TEXT," + BELOW13
-                + " TEXT," + VIOLENCE
-                + " TEXT," + VULGAR
-                + " TEXT," + RATING
-                + " FLOAT," + MESSAGE
-                + " TEXT" + ")" )
-        db?.execSQL(createTBLMovie)
+//        db!!.execSQL("DROP TABLE " + TBL_MOVIE)
+//        val createTBLMovie = ("CREATE TABLE " + TBL_MOVIE + "("
+//                + ID +" INTEGER PRIMARY KEY," + NAME + " TEXT," +
+//                DESCRIPTION + " TEXT," + LANGUAGE + " TEXT," + DATE
+//                + " TEXT," + BELOW13
+//                + " TEXT," + VIOLENCE
+//                + " TEXT," + VULGAR
+//                + " TEXT," + RATING
+//                + " FLOAT," + MESSAGE
+//                + " TEXT" + ")" )
+//        db?.execSQL(createTBLMovie)
 
         val success = db.insert(TBL_MOVIE, null,contentValues)
         db.close()
@@ -232,22 +232,13 @@ class SQLiteHelper(context: Context) :
 
     }
 
-    fun addReview(movie:Movie_2,rating:Float,message:String):Int{
+    fun addReview(rating:RatingModel):Int{
         val db = this.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(ID, movie.id)
-//        contentValues.put(NAME, movie.name)
-//        contentValues.put(DESCRIPTION, movie.description)
-//        contentValues.put(LANGUAGE, movie.language)
-//        contentValues.put(DATE, movie.date)
-//        contentValues.put(BELOW13, movie.below13)
-//        contentValues.put(VIOLENCE, movie.violence)
-//        contentValues.put(VULGAR, movie.vulgar)
-        contentValues.put(RATING,rating)
-        contentValues.put(MESSAGE,message)
-
-
-        val success = db.update(TBL_MOVIE,contentValues,"id="+movie.id,null)
+        contentValues.put(ID, rating.movieid)
+        contentValues.put(RATING,rating.rating)
+        contentValues.put(MESSAGE,rating.message)
+        val success = db.update(TBL_MOVIE,contentValues,"id="+rating.movieid,null)
         db.close()
 
         return success
