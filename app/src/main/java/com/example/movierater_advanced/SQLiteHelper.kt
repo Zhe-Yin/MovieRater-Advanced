@@ -71,17 +71,17 @@ class SQLiteHelper(context: Context) :
         contentValues.put(RATING,0)
         contentValues.put(MESSAGE,"N/A")
 
-        db!!.execSQL("DROP TABLE " + TBL_MOVIE)
-        val createTBLMovie = ("CREATE TABLE " + TBL_MOVIE + "("
-                + ID +" INTEGER PRIMARY KEY," + NAME + " TEXT," +
-                DESCRIPTION + " TEXT," + LANGUAGE + " TEXT," + DATE
-                + " TEXT," + BELOW13
-                + " BOOLEAN," + VIOLENCE
-                + " BOOLEAN," + VULGAR
-                + " BOOLEAN," + RATING
-                + " FLOAT," + MESSAGE
-                + " TEXT" + ")" )
-        db?.execSQL(createTBLMovie)
+//        db!!.execSQL("DROP TABLE " + TBL_MOVIE)
+//        val createTBLMovie = ("CREATE TABLE " + TBL_MOVIE + "("
+//                + ID +" INTEGER PRIMARY KEY," + NAME + " TEXT," +
+//                DESCRIPTION + " TEXT," + LANGUAGE + " TEXT," + DATE
+//                + " TEXT," + BELOW13
+//                + " BOOLEAN," + VIOLENCE
+//                + " BOOLEAN," + VULGAR
+//                + " BOOLEAN," + RATING
+//                + " FLOAT," + MESSAGE
+//                + " TEXT" + ")" )
+//        db?.execSQL(createTBLMovie)
 
         val success = db.insert(TBL_MOVIE, null,contentValues)
         db.close()
