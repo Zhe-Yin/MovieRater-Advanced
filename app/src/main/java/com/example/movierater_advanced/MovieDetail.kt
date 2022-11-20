@@ -41,47 +41,55 @@ class MovieDetail : AppCompatActivity() {
             registerForContextMenu(message);
 
             // Info retrieve from EditMovie / AddMovie after intent
-            val intent = intent
+            loadMovie(
+                intent.getParcelableExtra("Movie")!!,
+                intent.getParcelableExtra("Review")!!
+            )
 
-            title.text = intent.getStringExtra("name")
-            overview.text = intent.getStringExtra("description")
-            language.text = intent.getStringExtra("language")
-            date.text = intent.getStringExtra("date")
-            below13.text = intent.getStringExtra("below13")
-            languageused.text = intent.getStringExtra("vulgar")
-            violence.text = intent.getStringExtra("violence")
-//            rating.text = intent.getStringExtra("rating")
-//            message.text = intent.getStringExtra("message")
-            if(below13.text == "true"){
-                below13.setText("No")
-                if (languageused.text == "true"){
+        }
+
+
+    }
+    private fun loadMovie(movie: Movie_2,review:RatingModel) {
+        binding.apply {
+            title.text = movie.name
+            overview.text = movie.description
+            language.text = movie.language
+            date.text = movie.date
+//            below13.text = movie.below13.toString()
+            if(movie.below13 == false){
+                below13.text = "No"
+            }else{
+                if (movie.vulgar == true){
                     languageused.setText("(Violence)")
                     language.visibility = View.VISIBLE
                 }else{
                     languageused.text = ""
                 }
-                if(violence.text == "true"){
+                if(movie.violence == true){
                     violence.setText("(Vulgar)")
                     violence.visibility = View.VISIBLE
                 }else{
                     violence.text = ""
-
                 }
-            }else{
-                below13.setText("Yes")
             }
-            if(intent.getStringExtra("message") != "N/A"){
+            if(review.message != "N/A"){
                 val star_layout = findViewById<LinearLayout>(R.id.rating_star)
                 star_layout.visibility = View.VISIBLE
 
-                rating.text = intent.getStringExtra("rating")
-                message.text = intent.getStringExtra("message")
-                stars.rating = intent.getStringExtra("rating")!!.toFloat()
+                rating.text = review.rating.toString()
+                message.text = review.message.toString()
+                stars.rating = review.rating
             }
 
+//            if (movie.review != null) {
+//                textViewMovieRating.text = "${movie.review} | ${movie.rating}/5"
+//            } else {
+//                textViewMovieRating.text = "No reviews yet.\n" +
+//                        "Long press here to add your review"
+//                registerForContextMenu(textViewMovieRating)
+//            }
         }
-
-
     }
 
 
@@ -93,8 +101,8 @@ class MovieDetail : AppCompatActivity() {
     }
     // Navigate to Main Page
     override fun onSupportNavigateUp(): Boolean {
-        val intent = Intent(this@MovieDetail, MainActivity::class.java)
-        startActivity(intent)
+        NavigateBack(intent.getParcelableExtra("Movie")!!,
+            intent.getParcelableExtra("Review")!!)
         return true
     }
 
@@ -102,8 +110,8 @@ class MovieDetail : AppCompatActivity() {
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
         binding.apply {
-            val intent = intent
-            if(intent.getStringExtra("message") == "N/A"){
+
+            if(rating.text.isEmpty()){
                 menu.add(0, v.id, 0, "Add Review")
             }else{
                 menu.add(0, v.id, 0, "Edit Review")
@@ -113,7 +121,19 @@ class MovieDetail : AppCompatActivity() {
 
 
     }
+    fun UpdateReview(movie:Movie_2,review:RatingModel){
+        val intent = Intent(this@MovieDetail, Rating::class.java)
+        intent.putExtra("Review",review)
+        intent.putExtra("Movie",movie)
+        startActivity(intent)
+    }
+    fun NavigateBack(movie:Movie_2,review:RatingModel){
+        val intent = Intent(this@MovieDetail, MainActivity::class.java)
 
+        intent.putExtra("Review",review)
+        intent.putExtra("Movie",movie)
+        startActivity(intent)
+    }
     // Context menu item select listener
     override fun onContextItemSelected(item: MenuItem): Boolean {
 //        val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
@@ -121,42 +141,16 @@ class MovieDetail : AppCompatActivity() {
         if(item.title == "Add Review"){
 
             binding.apply {
-                val intent1 = Intent(this@MovieDetail, Rating::class.java)
-//                val movie = adapter!!.getItem(info.position)!!
-
-
-                intent1.putExtra("id",intent.getStringExtra("id"))
-                intent1.putExtra("name",title.text.toString())
-                intent1.putExtra("description",overview.text.toString())
-                intent1.putExtra("date",date.text.toString())
-                intent1.putExtra("language",language.text.toString())
-                intent1.putExtra("below13",below13.text.toString())
-                intent1.putExtra("violence",violence.text.toString())
-                intent1.putExtra("vulgar",languageused.text.toString())
-                intent1.putExtra("rating",intent.getStringExtra("rating"))
-                intent1.putExtra("message",intent.getStringExtra("message"))
-                startActivity(intent1)
+                UpdateReview(intent.getParcelableExtra("Movie")!!,
+                    intent.getParcelableExtra("Review")!!)
             }
 
         }else if(item.title == "Edit Review"){
 
             binding.apply {
-                val intent1 = Intent(this@MovieDetail, Rating::class.java)
-//                val movie = adapter!!.getItem(info.position)!!
 
-
-
-                intent1.putExtra("id",intent.getStringExtra("id"))
-                intent1.putExtra("name",title.text.toString())
-                intent1.putExtra("description",overview.text.toString())
-                intent1.putExtra("date",date.text.toString())
-                intent1.putExtra("language",language.text.toString())
-                intent1.putExtra("below13",below13.text.toString())
-                intent1.putExtra("violence",violence.text.toString())
-                intent1.putExtra("vulgar",languageused.text.toString())
-                intent1.putExtra("rating",intent.getStringExtra("rating"))
-                intent1.putExtra("message",intent.getStringExtra("message"))
-                startActivity(intent1)
+                UpdateReview( intent.getParcelableExtra("Movie")!!,
+                    intent.getParcelableExtra("Review")!!)
             }
         }
 

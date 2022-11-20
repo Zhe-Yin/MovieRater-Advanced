@@ -55,16 +55,16 @@ class EditMovie : AppCompatActivity() {
             val language_final:RadioButton = findViewById(language_button)
             val language = language_final.text.toString()
             val intent = intent
-            var chk_below13 = "false"
-            var chk_violence = "false"
-            var chk_vulgar = "false"
+            var chk_below13 = false
+            var chk_violence = false
+            var chk_vulgar = false
             if(below13.isChecked){
-                chk_below13 = "true"
+                chk_below13 = true
                 if(violence.isChecked){
-                    chk_violence = "true"
+                    chk_violence = true
                 }
                 if(languageused.isChecked){
-                    chk_vulgar = "true"
+                    chk_vulgar = true
                 }
             }
 

@@ -34,75 +34,81 @@ class Rating : AppCompatActivity() {
             // Initalize SqlHelper
             sqLiteHelper = SQLiteHelper(this@Rating)
 
-            val intent = intent
-            if(intent.getStringExtra("message") != "N/A"){
-                println(intent.getStringExtra("name"))
-                btnSubmit.text = "Save"
-            }
 
+            loadReview(
+                intent.getParcelableExtra("Review")!!
+            )
 
             btnSubmit.setOnClickListener{
+                validation()
 
-                addreview()
+            }
+
+        }
+    }
+    fun validation(){
+        binding.apply {
+            if(message.text.isEmpty()){
+                message.error = "Message cannot be empty!"
+                return
+            }else{
+                addreview(intent.getParcelableExtra("Movie")!!,
+                    intent.getParcelableExtra("Review")!!)
+            }
+        }
+    }
+    fun loadReview(review:RatingModel){
+        binding.apply {
+            if(review.rating > 0){
+                btnSubmit.text = "Save"
+                message.setText(review.message)
+                stars.rating = review.rating
             }
 
         }
     }
 
-    private fun addreview(){
+    private fun addreview(movie: Movie_2,review:RatingModel){
         val rating = findViewById<RatingBar>(R.id.stars)
-        val rate = rating.getRating().toString()
+        val rate = rating.rating.toString()
         val message = findViewById<EditText>(R.id.message)
 
-        val review = RatingModel(
-            movieid = intent.getStringExtra("id")!!.toInt(),
+        val reviewmodel = RatingModel(
+            movieid = movie.id,
             rating = rate.toFloat(),
-            message = message.toString()
+            message = message.text.toString()
         )
 
 
-        val status = sqLiteHelper.addReview(review)
+        val status = sqLiteHelper.addReview(reviewmodel)
         if(status > -1){
-            val intent1 = Intent(this@Rating,MovieDetail::class.java)
+            val intent = Intent(this@Rating,MovieDetail::class.java)
+            intent.putExtra("Movie",movie)
+            intent.putExtra("Review",reviewmodel)
+            startActivity(intent)
 
-            val intent = intent
-            println(intent.getStringExtra("name"))
-            intent1.putExtra("id",intent.getStringExtra("id"))
-            intent1.putExtra("name","Hello world")
-            intent1.putExtra("description","Hello world")
-            intent1.putExtra("date",intent.getStringExtra("date"))
-            intent1.putExtra("language",intent.getStringExtra("language"))
-            intent1.putExtra("below13",intent.getStringExtra("below13"))
-            intent1.putExtra("violence",intent.getStringExtra("violence"))
-            intent1.putExtra("vulgar",intent.getStringExtra("vulgar"))
-            intent1.putExtra("rating",rate)
-            intent1.putExtra("message",message.text.toString())
-            startActivity(intent1)
+
             Toast.makeText(applicationContext,"Review success" + message.toString(),Toast.LENGTH_LONG).show()
         }else{
             Toast.makeText(applicationContext,"Review failed",Toast.LENGTH_LONG).show()
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        binding.apply {
-            val intent1 = Intent(this@Rating,MovieDetail::class.java)
 
-            val intent2 = intent
-            intent1.putExtra("id",intent2.getStringExtra("id"))
-            intent1.putExtra("name",intent2.getStringExtra("name"))
-            intent1.putExtra("description",intent2.getStringExtra("description"))
-            intent1.putExtra("date",intent2.getStringExtra("date"))
-            intent1.putExtra("language",intent2.getStringExtra("language"))
-            intent1.putExtra("below13",intent2.getStringExtra("below13"))
-            intent1.putExtra("violence",intent2.getStringExtra("violence"))
-            intent1.putExtra("vulgar",intent2.getStringExtra("vulgar"))
-            if(btnSubmit.text.toString() == "Save"){
-                intent1.putExtra("rating",intent2.getStringExtra("rating"))
-                intent1.putExtra("message",intent2.getStringExtra("message"))
-            }
-                startActivity(intent1)
+    override fun onSupportNavigateUp(): Boolean {
+            NavigateBack(intent.getParcelableExtra("Movie")!!,
+                intent.getParcelableExtra("Review")!!)
             return true
+
+    }
+    fun NavigateBack(movie: Movie_2,review:RatingModel){
+        binding.apply {
+            val intent = Intent(this@Rating,MovieDetail::class.java)
+            intent.putExtra("Movie",movie)
+            if(btnSubmit.text.toString() == "Save"){
+                intent.putExtra("Review",review)
+            }
+            startActivity(intent)
         }
 
     }

@@ -80,16 +80,19 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, MovieDetail::class.java)
             val movie = movies[position]
             val rating = review[position]
-            intent.putExtra("id", movie.id.toString())
-            intent.putExtra("name",movie.name)
-            intent.putExtra("description",movie.description)
-            intent.putExtra("date",movie.date)
-            intent.putExtra("language",movie.language)
-            intent.putExtra("below13",movie.below13)
-            intent.putExtra("violence",movie.violence)
-            intent.putExtra("vulgar",movie.vulgar)
-            intent.putExtra("rating",rating.rating.toString())
-            intent.putExtra("message",rating.message)
+            intent.putExtra("Movie",movie)
+            intent.putExtra("Review",rating)
+
+
+//            intent.putExtra("name",movie.name)
+//            intent.putExtra("description",movie.description)
+//            intent.putExtra("date",movie.date)
+//            intent.putExtra("language",movie.language)
+//            intent.putExtra("below13",movie.below13)
+//            intent.putExtra("violence",movie.violence)
+//            intent.putExtra("vulgar",movie.vulgar)
+//            intent.putExtra("rating",rating.rating.toString())
+//            intent.putExtra("message",rating.message)
             startActivity(intent)
         }
 
@@ -136,14 +139,14 @@ override fun onCreateContextMenu(
             "Edit" -> {
                 val movie = adapter.getItem(info.position)!!
                 val intent = Intent(this, EditMovie::class.java)
-                intent.putExtra("id", movie.id.toString())
-                intent.putExtra("name",movie.name)
-                intent.putExtra("description",movie.description)
-                intent.putExtra("date",movie.date)
-                intent.putExtra("language",movie.language)
-                intent.putExtra("below13",movie.below13)
-                intent.putExtra("violence",movie.violence)
-                intent.putExtra("vulgar",movie.vulgar)
+                intent.putExtra("Movie",movie)
+//                intent.putExtra("name",movie.name)
+//                intent.putExtra("description",movie.description)
+//                intent.putExtra("date",movie.date)
+//                intent.putExtra("language",movie.language)
+//                intent.putExtra("below13",movie.below13)
+//                intent.putExtra("violence",movie.violence)
+//                intent.putExtra("vulgar",movie.vulgar)
 //                intent.putExtra("rating",)
                 startActivity(intent)
                 return true
