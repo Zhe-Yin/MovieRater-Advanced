@@ -36,25 +36,27 @@ class EditMovie : AppCompatActivity() {
 
             sqLiteHelper = SQLiteHelper(this@EditMovie)
 
-            insertInfo()
+
 
             // check visibility
             below13.setOnClickListener{
                 setvisibility()
             }
-
+            insertInfo(
+                intent.getParcelableExtra("Movie")!!
+            )
 
         }
     }
 
-    private fun updateMovie(){
+    private fun updateMovie(movie:Movie_2){
         binding.apply{
 
             val language_grp:RadioGroup = findViewById(R.id.group_language)
             val language_button = language_grp.checkedRadioButtonId
             val language_final:RadioButton = findViewById(language_button)
             val language = language_final.text.toString()
-            val intent = intent
+
             var chk_below13 = false
             var chk_violence = false
             var chk_vulgar = false
@@ -69,10 +71,10 @@ class EditMovie : AppCompatActivity() {
             }
 
 
-            var movie_id = intent.getStringExtra("id")
+
 
             val movie = Movie_2(
-                id=movie_id!!.toInt(),
+                id=movie.id,
                 name = name.text.toString(),
                 description = description.text.toString(),
                 language = language,
@@ -95,28 +97,30 @@ class EditMovie : AppCompatActivity() {
         }
 
     }
-    private fun insertInfo(){
+    private fun insertInfo(movie:Movie_2){
         binding.apply {
-            val intent = intent
+//            val intent = intent
 
             val langauge_grp = findViewById<RadioGroup>(R.id.group_language)
             val language_button = langauge_grp.checkedRadioButtonId
-            if(language_button.toString() == intent.getStringExtra("language")){
+            if(language_button.toString() == movie.language){
                 langauge_grp.checkedRadioButtonId
             }
 
-            name.setText(intent.getStringExtra("name"))
-            description.setText(intent.getStringExtra("description"))
-            date.setText(intent.getStringExtra("date"))
+            name.setText(movie.name)
+            description.setText(movie.description)
+            date.setText(movie.date)
 
-            if(intent.getStringExtra("below13") == "true"){
+            if(movie.below13.toString() == "true"){
                 below13.isChecked = true
-                if(intent.getStringExtra("violence") == "true"){
+                if(movie.violence.toString() == "true"){
                     violence.isChecked = true
                 }
-                if(intent.getStringExtra("vulgar") == "true"){
+                if(movie.below13.toString() == "true"){
                     languageused.isChecked = true
                 }
+            }else{
+                below13.isChecked = false
             }
 
 
@@ -181,14 +185,14 @@ class EditMovie : AppCompatActivity() {
                     haschk = false
                 }
             }
-            if(below13.isChecked == true){
-                if(violence.isChecked == false && languageused.isChecked == false){
+            if(below13.isChecked){
+                if(violence.isChecked == false && languageused.isChecked == false) {
                     below13.error = "Please check either Violence / Language Used or Both"
                     haschk = false
                 }
             }
             if(haschk == true){
-                updateMovie()
+                updateMovie(intent.getParcelableExtra("Movie")!!)
             }
 
         }
