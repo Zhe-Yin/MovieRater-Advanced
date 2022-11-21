@@ -140,6 +140,7 @@ override fun onCreateContextMenu(
                 val movie = adapter.getItem(info.position)!!
                 val intent = Intent(this, EditMovie::class.java)
                 intent.putExtra("Movie",movie)
+                println(movie.below13)
 //                intent.putExtra("name",movie.name)
 //                intent.putExtra("description",movie.description)
 //                intent.putExtra("date",movie.date)

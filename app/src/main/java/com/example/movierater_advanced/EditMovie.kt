@@ -120,7 +120,7 @@ class EditMovie : AppCompatActivity() {
                 if(movie.violence.toString() == "true"){
                     violence.isChecked = true
                 }
-                if(movie.below13.toString() == "true"){
+                if(movie.vulgar.toString() == "true"){
                     languageused.isChecked = true
                 }
             }else{
@@ -222,7 +222,7 @@ class EditMovie : AppCompatActivity() {
                 linear.visibility = View.INVISIBLE
             }
         }
-    }
+     }
 
 
 }

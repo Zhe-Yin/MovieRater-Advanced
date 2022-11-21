@@ -37,9 +37,9 @@ class SQLiteHelper(context: Context) :
                 + ID +" INTEGER PRIMARY KEY," + NAME + " TEXT," +
                  DESCRIPTION + " TEXT," + LANGUAGE + " TEXT," + DATE
                 + " TEXT," + BELOW13
-                + " BOOLEAN," + VIOLENCE
-                + " BOOLEAN," + VULGAR
-                + " BOOLEAN," + RATING
+                + " INTEGER," + VIOLENCE
+                + " INTEGER," + VULGAR
+                + " INTEGER," + RATING
                 + " FLOAT," + MESSAGE
                 + " TEXT" + ")" )
 
@@ -71,17 +71,19 @@ class SQLiteHelper(context: Context) :
         contentValues.put(RATING,0)
         contentValues.put(MESSAGE,"N/A")
 
-//        db!!.execSQL("DROP TABLE " + TBL_MOVIE)
-//        val createTBLMovie = ("CREATE TABLE " + TBL_MOVIE + "("
-//                + ID +" INTEGER PRIMARY KEY," + NAME + " TEXT," +
-//                DESCRIPTION + " TEXT," + LANGUAGE + " TEXT," + DATE
-//                + " TEXT," + BELOW13
-//                + " BOOLEAN," + VIOLENCE
-//                + " BOOLEAN," + VULGAR
-//                + " BOOLEAN," + RATING
-//                + " FLOAT," + MESSAGE
-//                + " TEXT" + ")" )
-//        db?.execSQL(createTBLMovie)
+        println(movie.below13)
+
+        db!!.execSQL("DROP TABLE " + TBL_MOVIE)
+        val createTBLMovie = ("CREATE TABLE " + TBL_MOVIE + "("
+                + ID +" INTEGER PRIMARY KEY," + NAME + " TEXT," +
+                DESCRIPTION + " TEXT," + LANGUAGE + " TEXT," + DATE
+                + " TEXT," + BELOW13
+                + " INTEGER," + VIOLENCE
+                + " INTEGER," + VULGAR
+                + " INTEGER," + RATING
+                + " FLOAT," + MESSAGE
+                + " TEXT" + ")" )
+        db?.execSQL(createTBLMovie)
 
         val success = db.insert(TBL_MOVIE, null,contentValues)
         db.close()
@@ -142,9 +144,10 @@ class SQLiteHelper(context: Context) :
                 description = cursor.getString(cursor.getColumnIndex("description"))
                 language = cursor.getString(cursor.getColumnIndex("language"))
                 date = cursor.getString(cursor.getColumnIndex("date"))
-                below13 = cursor.getString(cursor.getColumnIndex("below13")).toBoolean()
-                violence = cursor.getString(cursor.getColumnIndex("violence")).toBoolean()
-                vulgar = cursor.getString(cursor.getColumnIndex("vulgar")).toBoolean()
+                below13 = cursor.getInt(cursor.getColumnIndex("below13")) > 0
+                violence = cursor.getInt(cursor.getColumnIndex("violence"))  > 0
+                vulgar = cursor.getInt(cursor.getColumnIndex("vulgar")) > 0
+
 
 
                 val movie = Movie_2(id= id,name= name,description= description,language= language,date= date,below13=below13,violence=violence, vulgar = vulgar)
@@ -224,7 +227,7 @@ class SQLiteHelper(context: Context) :
         contentValues.put(VULGAR, movie.vulgar)
 //        contentValues.put(RATING,rating.rating)
 //        contentValues.put(MESSAGE,rating.message)
-
+        println(movie.below13)
         val success = db.update(TBL_MOVIE,contentValues,"id="+movie.id,null)
         db.close()
 

@@ -59,16 +59,18 @@ class MovieDetail : AppCompatActivity() {
             println(movie.below13)
 //            below13.text = movie.below13.toString()
             if(movie.below13 == false){
-                below13.text = "No"
+                below13.text = "Yes"
             }else{
+                below13.text = "No"
+                println(movie.violence)
                 if (movie.vulgar == true){
-                    languageused.setText("(Violence)")
+                    languageused.setText("(Vulgar)")
                     language.visibility = View.VISIBLE
                 }else{
                     languageused.text = ""
                 }
                 if(movie.violence == true){
-                    violence.setText("(Vulgar)")
+                    violence.setText("(Violence)")
                     violence.visibility = View.VISIBLE
                 }else{
                     violence.text = ""
