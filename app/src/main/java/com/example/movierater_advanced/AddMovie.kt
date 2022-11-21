@@ -81,12 +81,12 @@ class AddMovie : AppCompatActivity() {
             var chk_below13 = false
             var chk_violence = false
             var chk_vulgar = false
-            if(below13.isChecked){
+            if(below13.isChecked == true){
                 chk_below13 = true
-                if(violence.isChecked){
+                if(violence.isChecked == true){
                     chk_violence = true
                 }
-                if(languageused.isChecked){
+                if(languageused.isChecked == true){
                     chk_vulgar = true
                 }
             }

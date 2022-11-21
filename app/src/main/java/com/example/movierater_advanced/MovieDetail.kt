@@ -56,6 +56,7 @@ class MovieDetail : AppCompatActivity() {
             overview.text = movie.description
             language.text = movie.language
             date.text = movie.date
+            println(movie.below13)
 //            below13.text = movie.below13.toString()
             if(movie.below13 == false){
                 below13.text = "No"

@@ -60,12 +60,14 @@ class EditMovie : AppCompatActivity() {
             var chk_below13 = false
             var chk_violence = false
             var chk_vulgar = false
-            if(below13.isChecked){
+            if(below13.isChecked == true){
+                println("Hellow")
                 chk_below13 = true
-                if(violence.isChecked){
+                println(chk_below13)
+                if(violence.isChecked == true){
                     chk_violence = true
                 }
-                if(languageused.isChecked){
+                if(languageused.isChecked == true){
                     chk_vulgar = true
                 }
             }
@@ -103,13 +105,15 @@ class EditMovie : AppCompatActivity() {
 
             val langauge_grp = findViewById<RadioGroup>(R.id.group_language)
             val language_button = langauge_grp.checkedRadioButtonId
+            println(language_button)
             if(language_button.toString() == movie.language){
-                langauge_grp.checkedRadioButtonId
+                println(language_button)
             }
 
             name.setText(movie.name)
             description.setText(movie.description)
             date.setText(movie.date)
+            println(movie.below13.toString())
 
             if(movie.below13.toString() == "true"){
                 below13.isChecked = true
