@@ -36,8 +36,9 @@ class Movie_2 (
         parcel.writeString(language)
         parcel.writeString(date)
         parcel.writeByte(if (below13) 1 else 0)
-        parcel.writeByte(if (violence) 1 else 0)
         parcel.writeByte(if (vulgar) 1 else 0)
+        parcel.writeByte(if (violence) 1 else 0)
+
 //        parcel.writeValue(rating)
 //        parcel.writeString(review)
     }

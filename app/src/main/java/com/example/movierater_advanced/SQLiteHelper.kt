@@ -77,7 +77,7 @@ class SQLiteHelper(context: Context) :
         val createTBLMovie = ("CREATE TABLE " + TBL_MOVIE + "("
                 + ID +" INTEGER PRIMARY KEY," + NAME + " TEXT," +
                 DESCRIPTION + " TEXT," + LANGUAGE + " TEXT," + DATE
-                + " TEXT," + BELOW13
+                + " INTEGER," + BELOW13
                 + " INTEGER," + VIOLENCE
                 + " INTEGER," + VULGAR
                 + " INTEGER," + RATING

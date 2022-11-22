@@ -66,9 +66,11 @@ class EditMovie : AppCompatActivity() {
                 println(chk_below13)
                 if(violence.isChecked == true){
                     chk_violence = true
+                    println("check violence")
                 }
                 if(languageused.isChecked == true){
                     chk_vulgar = true
+                    println("check lanuage")
                 }
             }
 
@@ -119,9 +121,11 @@ class EditMovie : AppCompatActivity() {
                 below13.isChecked = true
                 if(movie.violence.toString() == "true"){
                     violence.isChecked = true
+                    println("check violence")
                 }
                 if(movie.vulgar.toString() == "true"){
                     languageused.isChecked = true
+                    println("check lanuage")
                 }
             }else{
                 below13.isChecked = false

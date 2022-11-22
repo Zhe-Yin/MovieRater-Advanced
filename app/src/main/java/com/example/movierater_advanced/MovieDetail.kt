@@ -65,7 +65,7 @@ class MovieDetail : AppCompatActivity() {
                 println(movie.violence)
                 if (movie.vulgar == true){
                     languageused.setText("(Vulgar)")
-                    language.visibility = View.VISIBLE
+                    languageused.visibility = View.VISIBLE
                 }else{
                     languageused.text = ""
                 }
