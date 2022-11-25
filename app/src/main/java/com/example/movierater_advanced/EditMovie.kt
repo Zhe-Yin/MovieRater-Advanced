@@ -199,6 +199,10 @@ class EditMovie : AppCompatActivity() {
                     haschk = false
                 }
             }
+            if (groupLanguage.checkedRadioButtonId == -1){
+                tamil.setError("Please select a language")
+                haschk = false
+            }
             if(haschk == true){
                 updateMovie(intent.getParcelableExtra("Movie")!!)
             }

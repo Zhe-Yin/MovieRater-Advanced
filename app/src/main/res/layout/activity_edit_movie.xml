@@ -70,7 +70,7 @@
                 android:text="Malay" />
 
             <RadioButton
-                android:id="@+id/Tamil"
+                android:id="@+id/tamil"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
