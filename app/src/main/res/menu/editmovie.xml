@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".EditMovie">
+    tools:context="a201457F.assignment_1.movierater_advanced.EditMovie">
 
     <item
         android:id="@+id/save"
@@ -14,9 +14,9 @@
         android:title="Cancel"
         app:showAsAction="ifRoom"
         />
-    <item
-        android:id="@+id/clear"
-        android:title="Clear Entries"
-        />
+<!--    <item-->
+<!--        android:id="@+id/clear"-->
+<!--        android:title="Clear Entries"-->
+<!--        />-->
 
 </menu>

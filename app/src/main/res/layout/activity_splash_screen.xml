@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    tools:context=".SplashScreen">
+    tools:context="a201457F.assignment_1.movierater_advanced.SplashScreen">
 
     <!--THIS IS IMAGEVIEW FOR OUR IMAGE IN SPLASH SCREEN-->
     <!--YOU CAN ADD YOUR IMAGE TO DRAWABLES.

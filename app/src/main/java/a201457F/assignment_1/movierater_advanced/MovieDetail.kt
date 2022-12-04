@@ -1,28 +1,21 @@
-package com.example.movierater_advanced
+package a201457F.assignment_1.movierater_advanced
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.ContextMenu
 import android.view.ContextMenu.ContextMenuInfo
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isInvisible
-import androidx.recyclerview.widget.RecyclerView
+import com.example.movierater_advanced.R
 import com.example.movierater_advanced.databinding.ActivityMovieDetailBinding
 
 
 
 class MovieDetail : AppCompatActivity() {
     private lateinit var binding: ActivityMovieDetailBinding
-    private lateinit var sqLiteHelper: SQLiteHelper
-    private lateinit var  recyclerView: RecyclerView
-    private var adapter:MovieAdapter? = null
-    private  var movie:Movie_2? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +43,7 @@ class MovieDetail : AppCompatActivity() {
 
 
     }
-    private fun loadMovie(movie: Movie_2,review:RatingModel) {
+    private fun loadMovie(movie: Movie_2, review: RatingModel) {
         binding.apply {
             title.text = movie.name
             overview.text = movie.description
@@ -79,29 +72,15 @@ class MovieDetail : AppCompatActivity() {
             if(review.message != "N/A"){
                 val star_layout = findViewById<LinearLayout>(R.id.rating_star)
                 star_layout.visibility = View.VISIBLE
-
-                rating.text = review.rating.toString()
                 message.text = review.message.toString()
                 stars.rating = review.rating
             }
 
-//            if (movie.review != null) {
-//                textViewMovieRating.text = "${movie.review} | ${movie.rating}/5"
-//            } else {
-//                textViewMovieRating.text = "No reviews yet.\n" +
-//                        "Long press here to add your review"
-//                registerForContextMenu(textViewMovieRating)
-//            }
         }
     }
 
 
-    // Menu
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.moviedetail, menu)
-        R.menu.moviedetail
-        return true
-    }
+//
     // Navigate to Main Page
     override fun onSupportNavigateUp(): Boolean {
         NavigateBack(intent.getParcelableExtra("Movie")!!,
@@ -114,7 +93,7 @@ class MovieDetail : AppCompatActivity() {
         super.onCreateContextMenu(menu, v, menuInfo)
         binding.apply {
 
-            if(rating.text.isEmpty()){
+            if(message.text.isEmpty()){
                 menu.add(0, v.id, 0, "Add Review")
             }else{
                 menu.add(0, v.id, 0, "Edit Review")
@@ -124,13 +103,13 @@ class MovieDetail : AppCompatActivity() {
 
 
     }
-    fun UpdateReview(movie:Movie_2,review:RatingModel){
+    fun UpdateReview(movie: Movie_2, review: RatingModel){
         val intent = Intent(this@MovieDetail, Rating::class.java)
         intent.putExtra("Review",review)
         intent.putExtra("Movie",movie)
         startActivity(intent)
     }
-    fun NavigateBack(movie:Movie_2,review:RatingModel){
+    fun NavigateBack(movie: Movie_2, review: RatingModel){
         val intent = Intent(this@MovieDetail, MainActivity::class.java)
 
         intent.putExtra("Review",review)

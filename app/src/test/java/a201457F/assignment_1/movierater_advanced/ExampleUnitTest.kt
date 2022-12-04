@@ -1,4 +1,4 @@
-package com.example.movierater_advanced
+package a201457F.assignment_1.movierater_advanced
 
 import org.junit.Test
 

@@ -1,22 +1,17 @@
-package com.example.movierater_advanced
+package a201457F.assignment_1.movierater_advanced
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.media.Rating
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.RatingBar
 import android.widget.Toast
-import androidx.recyclerview.widget.RecyclerView
+import com.example.movierater_advanced.R
 import com.example.movierater_advanced.databinding.ActivityRatingBinding
 
 class Rating : AppCompatActivity() {
     private lateinit var binding: ActivityRatingBinding
     private lateinit var sqLiteHelper: SQLiteHelper
-    private lateinit var  recyclerView: RecyclerView
-    private lateinit var adapter: ArrayAdapter<Movie_2>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +52,7 @@ class Rating : AppCompatActivity() {
             }
         }
     }
-    fun loadReview(review:RatingModel){
+    fun loadReview(review: RatingModel){
         binding.apply {
             if(review.rating > 0){
                 btnSubmit.text = "Save"
@@ -68,7 +63,7 @@ class Rating : AppCompatActivity() {
         }
     }
 
-    private fun addreview(movie: Movie_2,review:RatingModel){
+    private fun addreview(movie: Movie_2, review: RatingModel){
         val rating = findViewById<RatingBar>(R.id.stars)
         val rate = rating.rating.toString()
         val message = findViewById<EditText>(R.id.message)
@@ -82,13 +77,13 @@ class Rating : AppCompatActivity() {
 
         val status = sqLiteHelper.addReview(reviewmodel)
         if(status > -1){
-            val intent = Intent(this@Rating,MovieDetail::class.java)
+            val intent = Intent(this@Rating, MovieDetail::class.java)
             intent.putExtra("Movie",movie)
             intent.putExtra("Review",reviewmodel)
             startActivity(intent)
 
 
-            Toast.makeText(applicationContext,"Review success" + message.toString(),Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext,"Review success" + message.text.toString(),Toast.LENGTH_LONG).show()
         }else{
             Toast.makeText(applicationContext,"Review failed",Toast.LENGTH_LONG).show()
         }
@@ -101,9 +96,9 @@ class Rating : AppCompatActivity() {
             return true
 
     }
-    fun NavigateBack(movie: Movie_2,review:RatingModel){
+    fun NavigateBack(movie: Movie_2, review: RatingModel){
         binding.apply {
-            val intent = Intent(this@Rating,MovieDetail::class.java)
+            val intent = Intent(this@Rating, MovieDetail::class.java)
             intent.putExtra("Movie",movie)
             if(btnSubmit.text.toString() == "Save"){
                 intent.putExtra("Review",review)

@@ -1,27 +1,20 @@
-package com.example.movierater_advanced
+package a201457F.assignment_1.movierater_advanced
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.ContextMenu
-import android.view.ContextMenu.ContextMenuInfo
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.View.OnCreateContextMenuListener
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.movierater_advanced.R
 import com.example.movierater_advanced.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var sqLiteHelper: SQLiteHelper
-    private lateinit var  recyclerView: RecyclerView
     private lateinit var adapter:ArrayAdapter<Movie_2>
 
 
@@ -38,41 +31,14 @@ class MainActivity : AppCompatActivity() {
             //set actionbar title
             actionbar!!.title = "MovieRater"
 
-         // Start Recyclerview
-//            initRecyclerView()
-
             sqLiteHelper = SQLiteHelper(this@MainActivity)
 
-//            getMovieInfo()
             loadMovies(sqLiteHelper.getAllMovie(),sqLiteHelper.getAllReview())
 
-
-
-
-            // Click Image -> Movie Detail
-//            adapter?.onClickDetailItem {
-//                val intent = Intent(this@MainActivity, MovieDetail::class.java)
-//                intent.putExtra("id",it.id.toString())
-//                intent.putExtra("name",it.name)
-//                intent.putExtra("description",it.description)
-//                intent.putExtra("date",it.date)
-//                intent.putExtra("language",it.language)
-//                intent.putExtra("below13",it.below13)
-//                intent.putExtra("violence",it.violence)
-//                intent.putExtra("vulgar",it.vulgar)
-//                startActivity(intent)
-//            }
         }
     }
 
-
-//    private fun getMovieInfo() {
-//        val movielist = sqLiteHelper.getAllMovie()
-//        Log.e("Listing", "${movielist.size}")
-//
-//        adapter?.addItems(movielist)
-//    }
-    private fun loadMovies(movies: ArrayList<Movie_2>,review:ArrayList<RatingModel>){
+    private fun loadMovies(movies: ArrayList<Movie_2>, review:ArrayList<RatingModel>){
         adapter = MovieAdapter(this, R.layout.movielist_item, movies)
         val listView: ListView = findViewById(R.id.recyclerview)
         listView.adapter = adapter
@@ -83,16 +49,6 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("Movie",movie)
             intent.putExtra("Review",rating)
 
-
-//            intent.putExtra("name",movie.name)
-//            intent.putExtra("description",movie.description)
-//            intent.putExtra("date",movie.date)
-//            intent.putExtra("language",movie.language)
-//            intent.putExtra("below13",movie.below13)
-//            intent.putExtra("violence",movie.violence)
-//            intent.putExtra("vulgar",movie.vulgar)
-//            intent.putExtra("rating",rating.rating.toString())
-//            intent.putExtra("message",rating.message)
             startActivity(intent)
         }
 
@@ -129,26 +85,18 @@ override fun onCreateContextMenu(
     v: View?,
     menuInfo: ContextMenu.ContextMenuInfo?
 ) {
-    menuInflater.inflate(R.menu.moviedetail, menu)
+    menuInflater.inflate(R.menu.main_edit, menu)
     super.onCreateContextMenu(menu, v, menuInfo)
 }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
-        return when (item.title) {
+        when (item.title) {
             "Edit" -> {
                 val movie = adapter.getItem(info.position)!!
                 val intent = Intent(this, EditMovie::class.java)
                 intent.putExtra("Movie",movie)
-                println(movie.below13)
-//                intent.putExtra("name",movie.name)
-//                intent.putExtra("description",movie.description)
-//                intent.putExtra("date",movie.date)
-//                intent.putExtra("language",movie.language)
-//                intent.putExtra("below13",movie.below13)
-//                intent.putExtra("violence",movie.violence)
-//                intent.putExtra("vulgar",movie.vulgar)
-//                intent.putExtra("rating",)
+
                 startActivity(intent)
                 return true
             }

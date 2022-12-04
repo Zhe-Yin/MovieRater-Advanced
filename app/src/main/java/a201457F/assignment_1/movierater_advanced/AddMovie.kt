@@ -1,17 +1,16 @@
-package com.example.movierater_advanced
+package a201457F.assignment_1.movierater_advanced
 
 //import android.widget.LinearLayout
 
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
+import com.example.movierater_advanced.R
 import com.example.movierater_advanced.databinding.ActivityAddMovieBinding
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -20,9 +19,6 @@ import java.text.SimpleDateFormat
 class AddMovie : AppCompatActivity() {
     private lateinit var binding: ActivityAddMovieBinding
     private lateinit var sqLiteHelper: SQLiteHelper
-    private lateinit var  recyclerView: RecyclerView
-    private var adapter:MovieAdapter? = null
-    private  var movie:Movie_2? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,31 +42,10 @@ class AddMovie : AppCompatActivity() {
             sqLiteHelper = SQLiteHelper(this@AddMovie)
 
 
-
-//            adapter?.setOnClickItem{
-//                Toast.makeText(applicationContext,it.name,Toast.LENGTH_SHORT).show()
-//
-//                val list_language =findViewById<TextView>(R.id.list_language)
-//                val langauge_grp = findViewById<RadioGroup>(R.id.group_language)
-//                val language_button = langauge_grp.checkedRadioButtonId
-//                if(language_button.toString() == list_language.text.toString()){
-//                    langauge_grp.checkedRadioButtonId
-//                }
-//
-//                name.setText(it.name)
-//                description.setText(it.description)
-//                date.setText(it.date)
-//                movie = it
-//            }
-
         }
 
     }
 
-//    private fun deleteMovie(id:Int){
-//        sqLiteHelper.deleteMoviebyId(id)
-//        getMovieInfo()
-//    }
 
     private fun addmovie(){
         binding.apply {
@@ -116,7 +91,7 @@ class AddMovie : AppCompatActivity() {
 
     // Navigate back to Main
     override fun onSupportNavigateUp(): Boolean {
-        val intent = Intent(this@AddMovie,MainActivity::class.java)
+        val intent = Intent(this@AddMovie, MainActivity::class.java)
         startActivity(intent)
         return true
     }

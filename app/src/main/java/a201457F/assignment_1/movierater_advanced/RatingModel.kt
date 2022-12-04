@@ -1,4 +1,4 @@
-package com.example.movierater_advanced
+package a201457F.assignment_1.movierater_advanced
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -18,9 +18,6 @@ class RatingModel(
         parcel.writeInt(movieid)
         parcel.writeFloat(rating)
         parcel.writeString(message)
-
-//        parcel.writeValue(rating)
-//        parcel.writeString(review)
     }
 
     override fun describeContents(): Int {

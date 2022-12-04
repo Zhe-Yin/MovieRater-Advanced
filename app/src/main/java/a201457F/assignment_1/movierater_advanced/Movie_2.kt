@@ -1,9 +1,8 @@
-package com.example.movierater_advanced
+package a201457F.assignment_1.movierater_advanced
 
 import android.os.Parcel
 import android.os.Parcelable
 import kotlin.random.Random
-import kotlin.random.nextInt
 
 class Movie_2 (
     var id:Int = getAutoId(),
@@ -11,11 +10,11 @@ class Movie_2 (
     var description:String = "",
     var language:String = "",
     var date:String = "",
-    var below13:Boolean ,
+    var below13:Boolean,
     var vulgar:Boolean,
     var violence:Boolean,
 
-) : Parcelable {
+    ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString()!!,
@@ -25,8 +24,7 @@ class Movie_2 (
         parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte(),
-//        parcel.readInt(),
-//        parcel.readString()
+
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -39,8 +37,6 @@ class Movie_2 (
         parcel.writeByte(if (vulgar) 1 else 0)
         parcel.writeByte(if (violence) 1 else 0)
 
-//        parcel.writeValue(rating)
-//        parcel.writeString(review)
     }
 
     override fun describeContents(): Int {
@@ -59,11 +55,5 @@ class Movie_2 (
 }
 fun getAutoId():Int{
             var random_id:Random = Random.Default
-            return random_id.nextInt(300,500)
+            return random_id.nextInt(100)
         }
-//{
-//    companion object{
-//
-//    }
-//
-//}

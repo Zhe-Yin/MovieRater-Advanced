@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddMovie"
+    tools:context="a201457F.assignment_1.movierater_advanced.AddMovie"
 
     android:orientation="vertical">
 <TextView

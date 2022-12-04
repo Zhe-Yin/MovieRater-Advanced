@@ -1,4 +1,4 @@
-package com.example.movierater_advanced
+package a201457F.assignment_1.movierater_advanced
 
 import android.content.Intent
 
@@ -8,7 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import androidx.recyclerview.widget.RecyclerView
+import com.example.movierater_advanced.R
 import com.example.movierater_advanced.databinding.ActivityEditMovieBinding
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -17,9 +17,6 @@ import java.text.SimpleDateFormat
 class EditMovie : AppCompatActivity() {
     private lateinit var binding: ActivityEditMovieBinding
     private lateinit var sqLiteHelper: SQLiteHelper
-    private lateinit var  recyclerView: RecyclerView
-    private var adapter:MovieAdapter? = null
-    private  var movie:Movie_2? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +46,7 @@ class EditMovie : AppCompatActivity() {
         }
     }
 
-    private fun updateMovie(movie:Movie_2){
+    private fun updateMovie(movie: Movie_2){
         binding.apply{
 
             val language_grp:RadioGroup = findViewById(R.id.group_language)
@@ -101,7 +98,7 @@ class EditMovie : AppCompatActivity() {
         }
 
     }
-    private fun insertInfo(movie:Movie_2){
+    private fun insertInfo(movie: Movie_2){
         binding.apply {
 //            val intent = intent
 
@@ -115,7 +112,8 @@ class EditMovie : AppCompatActivity() {
             name.setText(movie.name)
             description.setText(movie.description)
             date.setText(movie.date)
-            println(movie.below13.toString())
+
+
 
             if(movie.below13.toString() == "true"){
                 below13.isChecked = true
@@ -138,7 +136,7 @@ class EditMovie : AppCompatActivity() {
 
     // Navigate to Movie Detail
     override fun onSupportNavigateUp(): Boolean {
-        val intent = Intent(this@EditMovie,MainActivity::class.java)
+        val intent = Intent(this@EditMovie, MainActivity::class.java)
 
         startActivity(intent)
         return true
